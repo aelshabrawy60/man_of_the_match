@@ -1,0 +1,13 @@
+.players-dropdown-container{
+    background-color: rgb(50, 50, 50);
+    color: white;
+    border-radius: 10px;
+}
+.search-box input{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.players-dropdown_body{
+    max-height: 200px;
+    overflow: auto;
+}

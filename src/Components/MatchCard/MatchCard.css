@@ -1,0 +1,23 @@
+.match-card-container{
+    background-color: rgb(28, 28, 28);
+    border-radius: 10px;
+}
+.match-date{
+    color: rgb(205, 205, 205);
+}
+.man-of-the-match-card{
+    position: relative;
+    border-top: 1px solid rgba(135, 135, 135, 0.203);
+}
+
+.man-of-the-match-card__label{
+    position: absolute;
+    top:  -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 3px 13px;
+    background-color: var(--main-color);
+    width: fit-content;
+}
