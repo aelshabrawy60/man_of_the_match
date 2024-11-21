@@ -10,7 +10,7 @@ body {
   overflow-x: hidden;
   direction: rtl;
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
 }
 
 * {
