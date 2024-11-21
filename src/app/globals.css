@@ -48,6 +48,7 @@ input{
   border: none;
   padding: 10px;
   border-radius: 10px;
+  color: white;
 }
 input:focus-within{
   outline: none;
@@ -89,4 +90,8 @@ input:focus-within{
   border-radius: 8px;
   color: rgba(0, 0, 0, 0.806);
   padding: 8px 20px;
+}
+
+button{
+  color: white
 }
