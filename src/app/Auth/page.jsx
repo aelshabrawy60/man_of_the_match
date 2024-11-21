@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
-import dynamic from "next/dynamic";
-
-// Dynamically import Firebase methods only on the client-side
-const signUpWithEmail = dynamic(() => import("../../utility/auth").then(mod => mod.signUpWithEmail), { ssr: false });
-const loginWithEmail = dynamic(() => import("../../utility/auth").then(mod => mod.loginWithEmail), { ssr: false });
-const signInWithGoogle = dynamic(() => import("../../utility/auth").then(mod => mod.signInWithGoogle), { ssr: false });
-
+import { signUpWithEmail, loginWithEmail, signInWithGoogle } from "../../utility/auth";
 import { db } from "../firebase/clientApp"; // Import Firebase and Firestore
 import { doc, setDoc } from "firebase/firestore"; // For Firestore document operations
 import { FcGoogle } from "react-icons/fc";
