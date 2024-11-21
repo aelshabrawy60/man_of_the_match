@@ -58,24 +58,24 @@ function MatchCard({ day, time, location, id }) {
   return (
     <Link href={`/${id}`}>
       <div className="match-card-container">
-        <div className="p-4 d-flex py-5 justify-content-center align-items-center gap-4">
-          <div className="fs-5">{location}</div>
-          <div className="mx-4 match-date">{day_}</div>
-          <div className="fs-5">{time_}</div>
-        </div>
-        <div className="man-of-the-match-card d-flex justify-content-center">
-          <div className="man-of-the-match-card__label d-flex align-items-center">
-            <FaMedal className="gold-icon ms-2" /> رجل المباراة
+          <div className="p-4 d-flex py-5 justify-content-between align-items-center gap-4">
+            <div className="fs-5 term">{location}</div>
+            <div className="mx-3 match-date">{day_.split("-").slice(1).join("-")}</div>
+            <div className="fs-5 term">{time_}</div>
           </div>
-          <div className="mt-4 mb-3">
-            {MOTM ? (
-              <div className="mt-2"><PlayerRateCard playerId={MOTM} matchId={id} /></div>
-            ) : (
-              "لم يتم التحديد بعد"
-            )}
+          <div className="man-of-the-match-card d-flex justify-content-center">
+            <div className="man-of-the-match-card__label d-flex align-items-center">
+              <FaMedal className="gold-icon ms-2" /> رجل المباراة
+            </div>
+            <div className="mt-4 w-100 text-center px-4 mb-3">
+              {MOTM ? (
+                <div className="mt-2"><PlayerRateCard type={1} playerId={MOTM} matchId={id} /></div>
+              ) : (
+                "لم يتم التحديد بعد"
+              )}
+            </div>
           </div>
         </div>
-      </div>
     </Link>
   );
 }

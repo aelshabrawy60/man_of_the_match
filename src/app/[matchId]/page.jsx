@@ -35,11 +35,17 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
-        <h2 className="mb-5 mt-5">تفاصيل المبارة</h2>
-        <div className="d-flex flex-column gap-3 align-items-center">
-          <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {gameData?.day}</div>
-          <div className="d-flex fs-5 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(gameData?.time)}</div>
-          <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
+        <div className='header w-100 text-center py-3'>
+        <h2 className='m-0'>
+        تفاصيل المباراة</h2>
+        </div>
+        <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '220px'}}>
+          <img src="field.svg" className="field"></img>
+          <div className="d-flex flex-column align-items-center gap-3" style={{position: 'relative', zIndex: '99'}}>
+            <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {gameData?.day}</div>
+            <div className="d-flex fs-5 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(gameData?.time)}</div>
+            <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
+          </div>
         </div>
         <p className="fs-3 mb-5 mt-5">اللاعبين</p>
           <ol className="d-flex pe-2 flex-column p-0 player-list gap-4">

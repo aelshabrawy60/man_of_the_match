@@ -40,3 +40,7 @@
 .gold-icon{
     font-size: 18px;
 }
+
+.match-card-wrapper{
+    max-width: 700px;
+}
