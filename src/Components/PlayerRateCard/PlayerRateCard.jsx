@@ -113,10 +113,10 @@ function PlayerRateCard({ playerId, matchId }) {
         </div>
       </div>
       <div className="me-5">
-        <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player.uid}>
+        <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player?.uid}>
                       تقييم
         </button>
-        <div className="modal fade" id={"staticBackdrop" + player.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade" id={"staticBackdrop" + player?.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-scrollable">
                 <div className="modal-content">
                 <div className="modal-header mb-2 d-flex justify-content-between">
