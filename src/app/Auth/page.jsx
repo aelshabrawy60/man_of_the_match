@@ -54,7 +54,7 @@ export default function AuthPage() {
   
       // Retrieve and store the auth token
       const token = await user.getIdToken(); // Firebase method to get ID token
-      Cookies.set("authToken", token, { expires: 1 }); // Cookie expires in 1 day
+      Cookies.set("authToken", token, { expires: 365 * 10 }); // Cookie expires in 1 day
   
       // Redirect to Matches page after success
       router.push("/Matches");
