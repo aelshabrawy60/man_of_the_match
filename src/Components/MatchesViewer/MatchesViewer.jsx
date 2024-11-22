@@ -18,7 +18,7 @@ function MatchesViewer() {
   const [matches, loading, error] = useCollection(gamesCollectionRef);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   // Handle error state

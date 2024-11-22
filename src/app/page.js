@@ -1,6 +1,9 @@
 "use client"
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase/clientApp"
+import { auth } from "./firebase/clientApp" // Import the useRouter hook
+import { useEffect } from "react";
+import Link from "next/link";
+
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -20,6 +23,7 @@ export default function Home() {
         <p>Email: {user.email}</p>
         <p>UID: {user.uid}</p>
         {user.photoURL && <img src={user.photoURL} alt="User Avatar" />}
+        <Link href={'./Matches'}>mathces</Link>
       </div>
     );
   }

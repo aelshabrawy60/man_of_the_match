@@ -1,5 +1,6 @@
 import  "bootstrap/dist/css/bootstrap.min.css"
 import "./globals.css";
+import BootstrapClient from '../Components/BootstrapClient'
 
 import { Changa } from 'next/font/google';
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
       <body className={changa.className}>
         <div className="container-md p-0">
           {children}
+          <BootstrapClient />
         </div>
       </body>
     </html>

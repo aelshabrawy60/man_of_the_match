@@ -15,9 +15,6 @@ import { GiSoccerKick } from "react-icons/gi";
 
 
 function PlayerRateCard({ playerId, matchId , type = 0}) {
-  useEffect(() => {
-    import('bootstrap/dist/js/bootstrap.bundle.min.js');
-  }, []);
 
   const [user, loading, error] = useAuthState(auth);
   const rateDocId = `${playerId}_${matchId}`; // Unique document ID
