@@ -1,0 +1,15 @@
+.login-btn{
+    padding: 13px;
+}
+
+.input-icon{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #a3a3a3;
+}
+.input-container{
+    position: relative;
+}
+

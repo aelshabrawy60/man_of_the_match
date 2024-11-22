@@ -6,6 +6,7 @@ import { signUpWithEmail, loginWithEmail, signInWithGoogle } from "../../utility
 import { db } from "../firebase/clientApp"; // Import Firebase and Firestore
 import { doc, setDoc } from "firebase/firestore"; // For Firestore document operations
 import { FcGoogle } from "react-icons/fc";
+import Login from "@/Components/Login/Login";
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
@@ -75,62 +76,44 @@ export default function AuthPage() {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-      <h1 className="mb-5">{isLogin ? "تسجيل الدخول" : "انشاء حساب جديد"}</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <div>
-        {/* Show name input field only for sign-up */}
-        {!isLogin && (
-          <>
-            <label className="mb-3">الاسم</label>
-            <input
-              className="mb-4"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="ادخل اسمك"
-              style={{
-                display: "block",
-                marginBottom: "10px",
-                width: "100%",
-              }}
-            />
-          </>
-        )}
-
-        <label className="mb-3">البريد الالكتروني</label>
-        <input
-          className="mb-4"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="ادخل البريد الالكتروني"
-          style={{ display: "block", marginBottom: "10px", width: "100%" }}
-        />
-
-        <label className="mb-3">كلمة المرور</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="ادخل كلمة المرور"
-          style={{ display: "block", marginBottom: "10px", width: "100%" }}
-        />
-        <div className="d-flex gap-4 mt-4">
-          <button className="main-btn" onClick={handleEmailAuth} style={{ marginRight: "10px" }}>
-            {isLogin ? "دخول" : "انشاء"}
-          </button>
-
-          <button style={{ background: "none", border: "none" }} onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? "انشاء حساب جديد" : "لدي حساب بالفعل"}
-          </button>
+    <>
+      <div className="d-flex" style={{height: '100vh'}}>
+        <div className="login-container m-md-auto w-100" style={{maxWidth: "600px", position: 'relative', zIndex: '0'}}>
+          <img className="login-img" src="cover2.jpg"></img>
+          <div style={{position: 'relative', zIndex: '1'}} className="py-5 d-flex justify-content-center">
+            <h1>{isLogin ? "تسجيل الدخول" : "انشاء حساب جديد"}</h1>
+          </div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <div className="login-form px-4 py-1">
+            <div>
+              <Login name={name} setName={setName} isLogin={isLogin} email={email} setEmail={setEmail} setPassword={setPassword} password={password} handleEmailAuth={handleEmailAuth}/>
+            </div>
+            <hr className="mb-4 mt-4" />
+            <button className="google-btn w-100" onClick={handleGoogleAuth}>
+              <FcGoogle className="ms-2 fs-4" /> جوجل 
+            </button>
+            <div className="d-flex justify-content-center w-100 gap-4 mt-4">
+                {!isLogin ? 
+                  <div className="d-flex align-items-center gap-2">
+                      <div>لدي حساب بالفعل؟</div>
+                      <button style={{ background: "none", border: "none" , color: 'var(--main-color)'}} onClick={() => setIsLogin(!isLogin)}>
+                          تسجيل
+                      </button>
+                  </div>
+                  
+                :
+                <div className="d-flex align-items-center gap-2">
+                  <div>ليس ليك حساب؟</div>
+                  <button  style={{ background: "none", border: "none", color: 'var(--main-color)' }} onClick={() => setIsLogin(!isLogin)}>
+                    انشاء حساب
+                  </button>
+                </div>
+                }
+                
+            </div>
+          </div>
         </div>
       </div>
-      <hr className="mb-4 mt-4" />
-      <button className="google-btn fs-5" onClick={handleGoogleAuth} style={{ marginTop: "10px" }}>
-        sign in with google <FcGoogle className="me-2 fs-4" />
-      </button>
-    </div>
+    </>
   );
 }

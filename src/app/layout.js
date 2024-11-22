@@ -16,7 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={changa.className}>
-        {children}
+        <div className="container-md p-0">
+          {children}
+        </div>
       </body>
     </html>
   );

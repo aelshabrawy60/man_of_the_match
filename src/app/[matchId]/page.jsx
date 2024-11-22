@@ -10,6 +10,8 @@ import { SlClock } from "react-icons/sl";
 import { CiCalendarDate } from "react-icons/ci";
 import { GiSoccerField } from "react-icons/gi";
 import { MdOutlineStadium } from "react-icons/md";
+import { GiSoccerKick } from "react-icons/gi";
+
 
 
 
@@ -35,11 +37,11 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
-        <div className='header w-100 text-center py-3'>
+        <div className='header w-100 text-center py-4'>
         <h2 className='m-0'>
         تفاصيل المباراة</h2>
         </div>
-        <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '220px'}}>
+        <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '260px'}}>
           <img src="field.svg" className="field"></img>
           <div className="d-flex flex-column align-items-center gap-3" style={{position: 'relative', zIndex: '99'}}>
             <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {gameData?.day}</div>
@@ -47,7 +49,10 @@ export default function MatchPage() {
             <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
           </div>
         </div>
-        <p className="fs-3 mb-5 mt-5">اللاعبين</p>
+        <div className="header-2 mb-4 w-100 d-flex justify-content-center">
+          <p className="fs-4 mt-4">اللاعبين <GiSoccerKick className="fs-1"/>
+          </p>
+        </div>
           <ol className="d-flex pe-2 flex-column p-0 player-list gap-4">
             {gameData?.players?.map((player, index) => (
               <li key={index} className="pe-3"><PlayerRateCard playerId={player.uid} matchId={matchId}/></li> // You can modify this based on the player data

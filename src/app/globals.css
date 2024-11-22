@@ -1,5 +1,5 @@
 :root {
-  --background: #0a0a0a;
+  --background: #11150f;
   --foreground: #ededed;
   --main-color: #00853E;
 }
@@ -85,11 +85,12 @@ input:focus-within{
 }
 
 .google-btn{
-  background-color: rgba(255, 255, 255, 0.902);
-  border: none;
+  background-color: rgba(255, 255, 255, 0.144);
+  border: 1px solid rgba(255, 255, 255, 0.139);
   border-radius: 8px;
-  color: rgba(0, 0, 0, 0.806);
-  padding: 8px 20px;
+  color: white;
+  padding: 12px 20px;
+  text-transform: uppercase;
 }
 
 button{
@@ -119,4 +120,62 @@ button{
   width: 100%;
   height: 100%;
   opacity: 0.15;
+}
+
+.header-2{
+  border-bottom: 1px solid rgba(114, 114, 114, 0.169);
+}
+
+.bac-img{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.input-2{
+  background: rgba(255, 255, 255, 0.059);
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.123);
+}
+
+.input-2::placeholder{
+  color: #a3a3a3;
+}
+
+.gradient-btn{
+  background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
+}
+
+.login-form{
+  border-top: 1px solid rgba(255, 255, 255, 0.123);
+  position: relative;
+  z-index: 2;
+  background-color: #11150fc3;
+  backdrop-filter: blur(10px);
+}
+
+.login-img{
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+@media (min-width: 700px) {
+  .login-container{
+    border: 2px solid rgba(255, 255, 255, 0.043);
+    padding-bottom: 30px;
+  }
+  body{
+
+  }
 }
