@@ -11,6 +11,10 @@ import { CiCalendarDate } from "react-icons/ci";
 import { GiSoccerField } from "react-icons/gi";
 import { MdOutlineStadium } from "react-icons/md";
 import { GiSoccerKick } from "react-icons/gi";
+import EditMatch from "@/Components/EditMatch/EditMatch";
+import { MdEdit } from "react-icons/md";
+import { MdClose } from "react-icons/md";
+
 
 
 
@@ -58,6 +62,22 @@ export default function MatchPage() {
               <li key={index} className="pe-3"><PlayerRateCard playerId={player.uid} matchId={matchId}/></li> // You can modify this based on the player data
             ))}
           </ol>
+          <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <MdEdit />
+          </button>
+          <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable">
+                    <div className="modal-content">
+                    <div className="modal-header mb-2 d-flex justify-content-between">
+                        <h1 className="modal-title fs-5" id="staticBackdropLabel">اضافة مباراة</h1>
+                        <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
+                    </div>
+                    <div className="modal-body">
+                        <EditMatch gameId={matchId}/>
+                    </div>
+                    </div>
+                </div>
+          </div>
       </div>
     );
   }

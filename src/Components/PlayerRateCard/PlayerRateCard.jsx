@@ -116,10 +116,13 @@ function PlayerRateCard({ playerId, matchId , type = 0}) {
       </div>
       {type == 0 ? 
 
+        
         <div className="me-5">
-          <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player?.uid}>
+          {/*player can not rate himself */}
+          {user.uid != playerId ? <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player?.uid}>
                         تقييم
-          </button>
+          </button>: <div >انت</div>}
+          
           <div className="modal fade" id={"staticBackdrop" + player?.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div className="modal-dialog modal-dialog-scrollable">
                   <div className="modal-content">
@@ -136,6 +139,7 @@ function PlayerRateCard({ playerId, matchId , type = 0}) {
         </div>
       
       : 
+        
         <div className="me-3">
           <div className="rate-container d-flex align-items-center"><span className="fs-5 ms-2">{currentRate.toFixed(1)}</span><FaStar className="star fs-5"/></div>
         </div>

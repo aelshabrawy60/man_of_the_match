@@ -9,6 +9,7 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import { IoAddSharp } from "react-icons/io5";
 
 import './CreateMatch.css'
+import EditMatch from "../EditMatch/EditMatch";
 
 function CreateMatch() {
   const [players, setPlayers] = useState([]);
@@ -71,7 +72,6 @@ function CreateMatch() {
       console.error("Error saving match: ", error);
     }
   };
-
   return (
     <div className="creat-match-container">
       <div className="row m-0 row-gap-3 mb-4">
