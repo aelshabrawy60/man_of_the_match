@@ -14,6 +14,7 @@ import { GiSoccerKick } from "react-icons/gi";
 import EditMatch from "@/Components/EditMatch/EditMatch";
 import { MdEdit } from "react-icons/md";
 import { MdClose } from "react-icons/md";
+import PlayerRateCardsViewer from "@/Components/PlayersRateCardsViewer/PlayerRateCardsViewer";
 
 
 
@@ -53,15 +54,7 @@ export default function MatchPage() {
             <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
           </div>
         </div>
-        <div className="header-2 mb-4 w-100 d-flex justify-content-center">
-          <p className="fs-4 mt-4">اللاعبين <GiSoccerKick className="fs-1"/>
-          </p>
-        </div>
-          <ol className="d-flex pe-2 flex-column p-0 player-list gap-4">
-            {gameData?.players?.map((player, index) => (
-              <li key={index} className="pe-3"><PlayerRateCard playerId={player.uid} matchId={matchId}/></li> // You can modify this based on the player data
-            ))}
-          </ol>
+        <PlayerRateCardsViewer matchId={matchId}/>
           <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <MdEdit />
           </button>

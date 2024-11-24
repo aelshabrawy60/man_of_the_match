@@ -14,15 +14,15 @@ import { GiSoccerKick } from "react-icons/gi";
 
 
 
-function PlayerRateCard({ playerId, matchId , type = 0}) {
+function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
 
   const [user, loading, error] = useAuthState(auth);
   const rateDocId = `${playerId}_${matchId}`; // Unique document ID
   const rateRef = doc(db, "rates", rateDocId);
   const [rateData] = useDocument(rateRef);
 
-  const [currentRate, setCurrentRate] = useState(0);
-  const [ratesCount, setRatesCount] = useState(0);
+  const [currentRate, setCurrentRate] = useState(rate);
+  const [ratesCount, setRatesCount] = useState(ratesCount_);
 
   // Player reference and fetching data using `useDocument`
   const playerRef = doc(db, "players", playerId);
