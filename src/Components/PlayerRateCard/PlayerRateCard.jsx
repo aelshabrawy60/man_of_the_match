@@ -97,8 +97,8 @@ function PlayerRateCard({ playerId, matchId , type = 0}) {
       addRate(user.uid, parseInt(rate))
   }
   return (
-    <div className="player-rate-card d-flex gap-3 align-items-center justify-content-between">
-      <div className="d-flex gap-3 align-items-center">
+    <div className="player-rate-card d-flex gap-3 w-100 align-items-center justify-content-between">
+      <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
         <div className="player-profile-photo-container">
           <img src={player?.profilePhoto || "default-image.png"}/>
         </div>
@@ -117,7 +117,7 @@ function PlayerRateCard({ playerId, matchId , type = 0}) {
       {type == 0 ? 
 
         
-        <div className="me-5">
+        <div className="me-2">
           {/*player can not rate himself */}
           {user.uid != playerId ? <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player?.uid}>
                         تقييم

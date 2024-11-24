@@ -17,6 +17,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={changa.className}>
+        {/* Google Analytics gtag.js */}
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-2F9FMK3GS2"
+          />
+          <script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-2F9FMK3GS2');
+            `}
+          </script>
         <div className="container-md p-0">
           {children}
           <BootstrapClient />
