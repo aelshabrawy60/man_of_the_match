@@ -1,0 +1,51 @@
+.navbar{
+    --bs-navbar-color : white;
+    --bs-navbar-active-color: white;
+    --bs-navbar-brand-color: white;
+}
+
+.active-link{
+    background-color: white;
+    color: var(--main-color) !important;
+}
+
+.nav-toggle-btn{
+    background: none;
+    border: none;
+    font-size: 30px;
+    transform: rotateY(180deg);
+}
+
+.navbar-collapse {
+    transition: height 0.3s ease;
+}
+  
+  .navbar-collapse:not(.show) {
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .navbar-collapse.show {
+    height: auto;
+  }
+  
+  /* If you want to animate the backdrop on mobile */
+  @media (max-width: 991.98px) {
+    .navbar-collapse {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100vh !important;
+      background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+  
+    .navbar-collapse.show {
+      transform: translateX(0);
+    }
+  }
