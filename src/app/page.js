@@ -3,6 +3,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/clientApp" // Import the useRouter hook
 import { useEffect } from "react";
 import Link from "next/link";
+import EditPlayerPhoto from "@/Components/EditPlayerPhoto/EditPlayerPhoto";
+import EditPlayerProfile from "@/Components/EditPlayerProfile/EditPlayerProfile";
 
 
 export default function Home() {

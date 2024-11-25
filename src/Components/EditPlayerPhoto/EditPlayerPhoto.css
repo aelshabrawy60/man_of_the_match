@@ -1,0 +1,28 @@
+.edit-photo-btn{
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    bottom: -15px;
+}
+
+.change-img-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.change-img-container img{
+    border: 2px solid rgba(255, 255, 255, 0.123);
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 50%;
+}

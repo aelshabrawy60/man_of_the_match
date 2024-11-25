@@ -176,3 +176,23 @@ button{
     padding-bottom: 30px;
   }
 }
+
+.login-btn{
+  padding: 13px;
+}
+
+.input-icon{
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  color: #a3a3a3;
+}
+.input-container{
+  position: relative;
+}
+
+.settings-section__header{
+  color: rgb(145, 145, 145);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.123);
+}
