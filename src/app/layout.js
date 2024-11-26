@@ -5,6 +5,7 @@ import { UserProvider } from "../app/context/UserContext";
 
 import { Changa } from "next/font/google";
 import Navbar from "@/Components/Navbar/Navbar";
+import BottomNav from "@/Components/BottomNav/BottomNav";
 
 const changa = Changa({
   subsets: ["latin", "latin-ext"], // Specify required subsets
@@ -36,7 +37,7 @@ export default function RootLayout({ children }) {
         </script>
         {/* Pass pathname to Navbar */}
         <UserProvider>
-          <Navbar/>
+          <BottomNav/>
         </UserProvider>
         <div className="container-md p-0">
           {children}

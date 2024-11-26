@@ -10,6 +10,8 @@ import MatchCard from '../MatchCard/MatchCard';
 import { GiSoccerBall } from "react-icons/gi";
 
 
+
+
 function MatchesViewer() {
   // Create a reference to the "players" collection
   const gamesCollectionRef = collection(db, 'games');
@@ -18,7 +20,7 @@ function MatchesViewer() {
   const [matches, loading, error] = useCollection(gamesCollectionRef);
 
   if (loading) {
-    return <div></div>;
+    return <div className='d-flex justify-content-center align-items-center w-100' style={{height: '100vh'}}><div className="loader"></div></div>;
   }
 
   // Handle error state
@@ -38,7 +40,7 @@ function MatchesViewer() {
             const matchData = doc.data();  // Get the data from each document
             return (
               <div key={doc.id} className='col-12'>
-                <MatchCard time={String(matchData.time)} day={String(matchData.day)} id={doc.id} location={matchData.location}/>
+                  <MatchCard time={String(matchData.time)} day={String(matchData.day)} id={doc.id} location={matchData.location}/>
               </div>
             );
           })

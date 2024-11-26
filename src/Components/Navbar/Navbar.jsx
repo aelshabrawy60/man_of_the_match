@@ -20,7 +20,7 @@ function Navbar() {
     const toggleMenu = () => setIsOpen(!isOpen);
     const closeMenu = () => setIsOpen(false);
 
-    if (pathname == '/Auth') return null;
+    if (pathname == '/Auth' ) return null;
     if (loading) return <div></div>;
     if (error) return <p>Error: {error.message}</p>;
 

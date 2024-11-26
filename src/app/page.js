@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import EditPlayerPhoto from "@/Components/EditPlayerPhoto/EditPlayerPhoto";
 import EditPlayerProfile from "@/Components/EditPlayerProfile/EditPlayerProfile";
+import BottomNav from "@/Components/BottomNav/BottomNav";
 
 
 export default function Home() {
@@ -25,7 +26,6 @@ export default function Home() {
         <p>Email: {user.email}</p>
         <p>UID: {user.uid}</p>
         {user.photoURL && <img src={user.photoURL} alt="User Avatar" />}
-        <Link href={'./Matches'}>mathces</Link>
       </div>
     );
   }
