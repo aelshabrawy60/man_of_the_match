@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUpWithEmail, loginWithEmail, signInWithGoogle } from "../../utility/auth";
 import { db } from "../firebase/clientApp"; // Firebase and Firestore
