@@ -164,6 +164,7 @@ button{
 .login-img{
   position: absolute;
   top: 0px;
+  width: 100%;
   max-height: 200px;
   object-fit: cover;
   z-index: 1;
