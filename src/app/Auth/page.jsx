@@ -9,6 +9,8 @@ import { FcGoogle } from "react-icons/fc";
 import Login from "@/Components/Login/Login";
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify';
+import Image from 'next/image';
+
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
@@ -114,7 +116,7 @@ export default function AuthPage() {
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
       <div className="login-container m-md-auto w-100" style={{ maxWidth: "600px", position: "relative", zIndex: "0" }}>
-        <img className="login-img" src="cover2.jpg" alt="Cover" />
+        <Image layout="responsive" width={1200} height={800} className="login-img" src="/cover2.jpg" alt="Cover" />
         <div style={{ position: "relative", zIndex: "1" }} className="py-5 d-flex justify-content-center">
           <h1>{isLogin ? "تسجيل الدخول" : "انشاء حساب جديد"}</h1>
         </div>
