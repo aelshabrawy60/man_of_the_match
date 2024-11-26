@@ -1,117 +1,123 @@
 "use client";
 
-import { useState } from "react";
+import { 
+  useState, 
+  useCallback, 
+  useEffect 
+} from "react";
 import { useRouter } from "next/navigation";
-import { signUpWithEmail, loginWithEmail, signInWithGoogle } from "../../utility/auth";
-import { db } from "../firebase/clientApp"; // Firebase and Firestore
+import { 
+  signUpWithEmail, 
+  loginWithEmail, 
+  signInWithGoogle 
+} from "@/utility/auth";
+import { db } from "../firebase/clientApp";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { FcGoogle } from "react-icons/fc";
 import Login from "@/Components/Login/Login";
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 
+const ERROR_MESSAGES = {
+  EMPTY_FIELDS: "Email, password, and name are required",
+  AUTH_FAILED: "Authentication failed. Please try again.",
+  GOOGLE_FAILED: "Google sign-in failed. Please try again."
+};
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState(""); // For capturing name during sign-up
+  const [name, setName] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
-  const [isLogin, setIsLogin] = useState(true); // Toggle between login/signup
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const router = useRouter(); // Initialize useRouter
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Function to create or update the Firestore document for a user
-  async function createUserDoc(user) {
-    const userRef = doc(db, "players", user.uid);
-    const userSnapshot = await getDoc(userRef);
+  const router = useRouter();
 
-    if (!userSnapshot.exists()) {
-      await setDoc(userRef, {
-        name: user.name || "Unknown", // Ensure name is not undefined
-        uid: user.uid,
-        email: user.email,
-        profilePhoto: user.photoURL,
-        createdAt: new Date(),
-        games: [], // Initialize games as an empty array
-      });
+  const createUserDoc = useCallback(async (user) => {
+    try {
+      const userRef = doc(db, "players", user.uid);
+      const userSnapshot = await getDoc(userRef);
+
+      if (!userSnapshot.exists()) {
+        await setDoc(userRef, {
+          name: user.displayName || user.name || "Unknown",
+          uid: user.uid,
+          email: user.email,
+          profilePhoto: user.photoURL,
+          createdAt: new Date(),
+          games: []
+        }, { merge: true });
+      }
+    } catch (error) {
+      console.error("User document creation failed", error);
+      toast.error("Profile setup failed");
     }
-  }
+  }, []);
 
-  // Validate form before proceeding with authentication
-  const validateForm = () => {
-    if (!email || !password) {
-      setError("Email and password are required");
-      return false;
-    }
-    if (!isLogin && !name) {
-      setError("Name is required for sign-up");
+  const validateForm = useCallback(() => {
+    if (!email || !password || (!isLogin && !name)) {
+      setError(ERROR_MESSAGES.EMPTY_FIELDS);
       return false;
     }
     return true;
-  };
+  }, [email, password, name, isLogin]);
 
-  // Handle email-based authentication
-  const handleEmailAuth = async () => {
-    if (!validateForm()) return; // Ensure form is valid before proceeding
+  const handleEmailAuth = useCallback(async () => {
+    if (!validateForm()) return;
 
     setIsLoading(true);
     try {
       let user;
       if (isLogin) {
         user = await loginWithEmail(email, password);
-        console.log("Logged in user:", user);
       } else {
         user = await signUpWithEmail(email, password);
         const userWithName = { ...user, name };
         await createUserDoc(userWithName);
-        console.log("Signed up user:", userWithName);
       }
 
-      // Retrieve and store the auth token
-      const token = await user.getIdToken(); // Firebase method to get ID token
-      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+      const token = await user.getIdToken();
+      Cookies.set("authToken", token, { 
+        expires: 365, 
+        secure: process.env.NODE_ENV === 'production' 
+      });
 
-      // Redirect to Matches page after success
+      router.prefetch("/Matches");
       router.push("/Matches");
+
     } catch (err) {
       console.error("Authentication Error:", err);
-      setError("Authentication failed. Please try again.");
-      toast.error("Authentication failed. Please try again.");
+      setError(ERROR_MESSAGES.AUTH_FAILED);
+      toast.error(ERROR_MESSAGES.AUTH_FAILED);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [email, password, name, isLogin, createUserDoc, router]);
 
-  // Handle Google authentication
-  const handleGoogleAuth = async () => {
+  const handleGoogleAuth = useCallback(async () => {
     setIsLoading(true);
     try {
-      console.time("Google Sign-in");
       const user = await signInWithGoogle();
-      console.timeEnd("Google Sign-in");
+      await createUserDoc(user);
 
-      // Retrieve and store the auth token
       const token = await user.getIdToken();
-      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+      Cookies.set("authToken", token, { 
+        expires: 365, 
+        secure: process.env.NODE_ENV === 'production' 
+      });
 
-      // Redirect immediately
+      router.prefetch("/Matches");
       router.push("/Matches");
 
-      // Run Firestore document creation in the background
-      const userWithName = {
-        ...user,
-        name: user.displayName || user.email || "Unknown",
-      };
-      createUserDoc(userWithName); // No need to await
     } catch (err) {
       console.error("Google Auth Error:", err);
-      setError("Google sign-in failed. Please try again.");
-      toast.error("Google sign-in failed. Please try again.");
+      setError(ERROR_MESSAGES.GOOGLE_FAILED);
+      toast.error(ERROR_MESSAGES.GOOGLE_FAILED);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [createUserDoc, router]);
 
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
@@ -120,8 +126,10 @@ export default function AuthPage() {
         <div style={{ position: "relative", zIndex: "1" }} className="py-5 d-flex justify-content-center">
           <h1>{isLogin ? "تسجيل الدخول" : "انشاء حساب جديد"}</h1>
         </div>
+        
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {isLoading && <div className="loading-spinner">Loading...</div>} {/* Loading spinner */}
+        {isLoading && <div className="loading-spinner">Loading...</div>}
+        
         <div className="login-form px-4 py-1">
           <Login
             name={name}
@@ -129,14 +137,21 @@ export default function AuthPage() {
             isLogin={isLogin}
             email={email}
             setEmail={setEmail}
-            setPassword={setPassword}
             password={password}
+            setPassword={setPassword}
             handleEmailAuth={handleEmailAuth}
           />
+          
           <hr className="mb-4 mt-4" />
-          <button className="google-btn w-100" onClick={handleGoogleAuth} disabled={isLoading}>
+          
+          <button 
+            className="google-btn w-100" 
+            onClick={handleGoogleAuth} 
+            disabled={isLoading}
+          >
             <FcGoogle className="ms-2 fs-4" /> جوجل
           </button>
+          
           <div className="d-flex justify-content-center w-100 gap-4 mt-4">
             {!isLogin ? (
               <div className="d-flex align-items-center gap-2">
