@@ -61,6 +61,10 @@ function EditMatch({ gameId }) {
     try {
       if (!isEditable) {
         console.log("Match cannot be edited after it starts.");
+        const matchDoc = doc(db, "games", gameId);
+        await updateDoc(matchDoc, {
+          players: players.map(player => ({ uid: player.uid })), // Store players as an array of maps with uid
+        });
         return;
       }
 
@@ -105,6 +109,11 @@ function EditMatch({ gameId }) {
     }
   };
 
+  // Function to remove a player
+  const removePlayer = (uid) => {
+    setPlayers(players.filter((player) => player.uid !== uid));
+  };
+
   return (
     <div className="edit-match-container">
       <div className="row m-0 row-gap-3 mb-4">
@@ -142,7 +151,7 @@ function EditMatch({ gameId }) {
         <div className="fs-5 mb-3">اللاعبين</div>
         
         {players.map((player) => (
-          <PlayerCard key={player.uid} name={player.name} photo={player.profilePhoto} />
+          <PlayerCard key={player.uid} name={player.name} photo={player.profilePhoto} onRemove={() => removePlayer(player.uid)}/>
         ))}
         <div>
           <div className="dropdown mt-4">
@@ -151,7 +160,7 @@ function EditMatch({ gameId }) {
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              disabled={!isEditable} // Disable the button if match is not editable
+              disabled={false} // Disable the button if match is not editable
             >
               <IoAddSharp />
             </button>
@@ -168,7 +177,7 @@ function EditMatch({ gameId }) {
           onClick={updateMatch}
           data-bs-dismiss="modal"
           aria-label="Close"
-          disabled={!isEditable} // Disable the button if match is not editable
+          disabled={false} // Disable the button if match is not editable
         >
           حفظ
         </button>

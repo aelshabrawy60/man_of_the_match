@@ -75,7 +75,7 @@ export default function AuthPage() {
       router.push("/Matches");
     } catch (err) {
       console.error("Authentication Error:", err);
-      setError("Authentication failed. Please try again.");
+      setError(err);
       toast.error("Authentication failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -106,7 +106,7 @@ export default function AuthPage() {
       createUserDoc(userWithName); // No need to await
     } catch (err) {
       console.error("Google Auth Error:", err);
-      setError("Google sign-in failed. Please try again.");
+      setError(err);
       toast.error("Google sign-in failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -120,9 +120,10 @@ export default function AuthPage() {
         <div style={{ position: "relative", zIndex: "1" }} className="py-5 d-flex justify-content-center">
           <h1>{isLogin ? "تسجيل الدخول" : "انشاء حساب جديد"}</h1>
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {isLoading && <div className="loading-spinner">Loading...</div>} {/* Loading spinner */}
+        
         <div className="login-form px-4 py-1">
+          {isLoading ? <div className="loading-spinner w-100 d-flex justify-content-center p-4"><div className="loader"></div></div>
+          :
           <Login
             name={name}
             setName={setName}
@@ -133,6 +134,8 @@ export default function AuthPage() {
             password={password}
             handleEmailAuth={handleEmailAuth}
           />
+          }
+          {error && <p style={{ color: "red" }} className="text-center mt-2">{error}</p>}
           <hr className="mb-4 mt-4" />
           <button className="google-btn w-100" onClick={handleGoogleAuth} disabled={isLoading}>
             <FcGoogle className="ms-2 fs-4" /> جوجل
