@@ -9,7 +9,6 @@ import { FcGoogle } from "react-icons/fc";
 import Login from "@/Components/Login/Login";
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 
 
 export default function AuthPage() {
@@ -85,6 +84,7 @@ export default function AuthPage() {
 
   // Handle Google authentication
   const handleGoogleAuth = async () => {
+    await router.prefetch('/Matches');
     setIsLoading(true);
     try {
       console.time("Google Sign-in");
