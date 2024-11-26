@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Import the useRouter hook
+import { useRouter } from "next/navigation";
 import { signUpWithEmail, loginWithEmail, signInWithGoogle } from "../../utility/auth";
-import { db } from "../firebase/clientApp"; // Import Firebase and Firestore
-import { doc, setDoc, getDoc } from "firebase/firestore"; // For Firestore document operations
+import { db } from "../firebase/clientApp"; // Firebase and Firestore
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { FcGoogle } from "react-icons/fc";
 import Login from "@/Components/Login/Login";
 import Cookies from "js-cookie";
-
+import { toast } from 'react-toastify';
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export default function AuthPage() {
   const router = useRouter(); // Initialize useRouter
 
   // Function to create or update the Firestore document for a user
-  async function creatUserDoc(user) {
+  async function createUserDoc(user) {
     const userRef = doc(db, "players", user.uid);
     const userSnapshot = await getDoc(userRef);
 
@@ -36,8 +36,23 @@ export default function AuthPage() {
     }
   }
 
+  // Validate form before proceeding with authentication
+  const validateForm = () => {
+    if (!email || !password) {
+      setError("Email and password are required");
+      return false;
+    }
+    if (!isLogin && !name) {
+      setError("Name is required for sign-up");
+      return false;
+    }
+    return true;
+  };
+
   // Handle email-based authentication
   const handleEmailAuth = async () => {
+    if (!validateForm()) return; // Ensure form is valid before proceeding
+
     setIsLoading(true);
     try {
       let user;
@@ -45,57 +60,56 @@ export default function AuthPage() {
         user = await loginWithEmail(email, password);
         console.log("Logged in user:", user);
       } else {
-        // On sign-up, pass name along with email and password
         user = await signUpWithEmail(email, password);
         const userWithName = { ...user, name };
-        await creatUserDoc(userWithName);
+        await createUserDoc(userWithName);
         console.log("Signed up user:", userWithName);
       }
-  
+
       // Retrieve and store the auth token
       const token = await user.getIdToken(); // Firebase method to get ID token
-      Cookies.set("authToken", token, { expires: 365 * 10 }); // Cookie expires in 1 day
-  
+      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+
       // Redirect to Matches page after success
       router.push("/Matches");
     } catch (err) {
-      setError(err.message);
+      console.error("Authentication Error:", err);
+      setError("Authentication failed. Please try again.");
+      toast.error("Authentication failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
-  
+
+  // Handle Google authentication
   const handleGoogleAuth = async () => {
     setIsLoading(true);
     try {
       console.time("Google Sign-in");
       const user = await signInWithGoogle();
       console.timeEnd("Google Sign-in");
-  
+
       // Retrieve and store the auth token
-      const token = await user.getIdToken(); // Firebase method to get ID token
-      Cookies.set("authToken", token, { expires: 1 }); // Cookie expires in 1 day
-  
+      const token = await user.getIdToken();
+      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+
       // Redirect immediately
-      console.time("Redirect to Matches");
       router.push("/Matches");
-      console.timeEnd("Redirect to Matches");
-  
+
       // Run Firestore document creation in the background
-      console.time("User Document Creation");
       const userWithName = {
         ...user,
         name: user.displayName || user.email || "Unknown",
       };
-      creatUserDoc(userWithName); // No need to await
-      console.timeEnd("User Document Creation");
+      createUserDoc(userWithName); // No need to await
     } catch (err) {
-      setError(err.message);
+      console.error("Google Auth Error:", err);
+      setError("Google sign-in failed. Please try again.");
+      toast.error("Google sign-in failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
@@ -107,18 +121,16 @@ export default function AuthPage() {
         {error && <p style={{ color: "red" }}>{error}</p>}
         {isLoading && <div className="loading-spinner">Loading...</div>} {/* Loading spinner */}
         <div className="login-form px-4 py-1">
-          <div>
-            <Login
-              name={name}
-              setName={setName}
-              isLogin={isLogin}
-              email={email}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              password={password}
-              handleEmailAuth={handleEmailAuth}
-            />
-          </div>
+          <Login
+            name={name}
+            setName={setName}
+            isLogin={isLogin}
+            email={email}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            password={password}
+            handleEmailAuth={handleEmailAuth}
+          />
           <hr className="mb-4 mt-4" />
           <button className="google-btn w-100" onClick={handleGoogleAuth} disabled={isLoading}>
             <FcGoogle className="ms-2 fs-4" /> جوجل
