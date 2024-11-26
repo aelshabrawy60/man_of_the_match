@@ -6,23 +6,38 @@ import { useEffect, useRef, useState } from "react";
 import { GiSoccerKick } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useUser } from "../../app/context/UserContext";
 import './BottomNav.css'
 
-const navs_ = [
-  { icon: <FaRegUser />, link: '/Profile/1' },
-  { icon: <GiSoccerKick />, link: '/Matches' },
-  { icon: <IoSettingsOutline />, link: '/Settings' },
-];
 
-function BottomNav({ navs = navs_, circleSize = 50 }) {
+
+function BottomNav({circleSize = 50 }) {
+  const { user, loading, error } = useUser();
   const pathname = usePathname();
   const indicatorRef = useRef("")
+
+  useEffect(()=>{
+    setXbyRef()
+  }, [pathname, loading])
+
+  if (pathname == '/Auth' ) return null;
+  if (loading) return <div></div>;
+  if (error) return <p>Error: {error.message}</p>;
+
+
+  let navs_ = [
+    { icon: <FaRegUser />, link: `/Profile/${loading ? '1' : user.uid}` },
+    { icon: <GiSoccerKick />, link: '/Matches' },
+    { icon: <IoSettingsOutline />, link: '/Settings' },
+  ];
   
   function getXbyId(id){
     return document.getElementById(id)?.offsetLeft - document.getElementById(id)?.offsetWidth
   }
 
   function setXbyRef() {
+    console.log(pathname)
+    console.log(getXbyId(pathname))
     if (indicatorRef.current) {
       const xPosition = getXbyId(pathname);
       if (xPosition !== undefined) {
@@ -32,9 +47,7 @@ function BottomNav({ navs = navs_, circleSize = 50 }) {
   }
   
 
-  useEffect(()=>{
-    setXbyRef()
-  }, [pathname])
+  
   return (
     <div className='p-3 nav-bottom-container'>
         <div ref={indicatorRef} className='nav-indicator p-2'>

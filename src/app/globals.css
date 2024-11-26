@@ -28,13 +28,13 @@ a {
   position: fixed;
   color: white;
   background-color: var(--main-color);
-  font-size: 30px;
+  font-size: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   border: none;
-  bottom: 5%;
+  bottom: 12%;
   right: 5%;
 }
 

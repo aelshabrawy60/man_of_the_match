@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
         <UserProvider>
           <BottomNav/>
         </UserProvider>
-        <div className="container-md p-0">
+        <div className="container-md p-0" style={{marginBottom: '90px'}}>
           {children}
           <BootstrapClient />
         </div>

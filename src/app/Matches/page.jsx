@@ -12,10 +12,11 @@ export default function Matches(){
     return(
         <>  
             <div>
-                <MatchesViewer />
                 <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     <IoAddSharp />
                 </button>
+                <MatchesViewer />
+                
 
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-scrollable">

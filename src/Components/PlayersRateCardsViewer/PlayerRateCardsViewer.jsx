@@ -1,5 +1,5 @@
 import { useDocument } from "react-firebase-hooks/firestore";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc ,updateDoc, increment, arrayUnion} from "firebase/firestore";
 import { db } from "../../app/firebase/clientApp";
 import React, { useEffect, useState } from "react";
 import PlayerRateCard from "../PlayerRateCard/PlayerRateCard";
@@ -59,6 +59,45 @@ function PlayerRateCardsViewer({ matchId }) {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+
+async function closeVotes() {
+    console.log("Closing votes for match:", matchId);
+
+    // Disable rating by setting a flag in the game document
+    const gameDocRef = doc(db, "games", matchId);
+    try {
+        await updateDoc(gameDocRef, {
+            closedVotes: true, // Mark the votes as closed
+            manOfTheMatch: sortedPlayers[0]?.player?.uid, // Set man of the match to the first player in the sorted array
+        });
+        console.log("Votes closed and man of the match set successfully for match:", matchId);
+    } catch (error) {
+        console.error("Error closing votes for match:", matchId, error);
+    }
+
+    // Update player documents to add the ratings to their cumulative totals and add the game to their games array
+    for (const { player, averageRate, ratesCount } of sortedPlayers) {
+        console.log(`Processing player: ${player.uid}, Average Rate: ${averageRate}, Rates Count: ${ratesCount}`);
+
+        const playerRef = doc(db, "players", player.uid);
+        try {
+            // Increment the player's total ratings and rate count
+            await updateDoc(playerRef, {
+                ratesSum: increment(averageRate * ratesCount), // Add the total rate sum
+                ratesCount: increment(ratesCount), // Add the number of ratings
+                games: arrayUnion(matchId), // Add the matchId to the player's games array
+            });
+            console.log(`Successfully updated player: ${player.uid} - New ratesSum, ratesCount, and games array`);
+        } catch (error) {
+            console.error(`Error updating player: ${player.uid}`, error);
+        }
+    }
+
+    console.log("Close votes process completed.");
+  }
+
+
 
   return (
     <div className="w-100">

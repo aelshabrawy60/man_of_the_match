@@ -33,6 +33,8 @@ export default function AuthPage() {
         profilePhoto: user.photoURL,
         createdAt: new Date(),
         games: [], // Initialize games as an empty array
+        ratesSum: 0,
+        ratesCount: 0,
       });
     }
   }
