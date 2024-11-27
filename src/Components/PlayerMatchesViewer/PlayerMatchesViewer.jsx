@@ -12,11 +12,7 @@ function PlayerMatchesViewer({gamesIds}) {
     gamesIds, // IDs to fetch
     { chunkSize: 10 } // Options (optional)
   );
-
-  useEffect(()=>{
-    console.log(documents)
-    console.log(gamesIds)
-  }, [documents])
+  
   return (
     <>
         <div className='matches-viewer-container d-flex flex-column align-items-center'>

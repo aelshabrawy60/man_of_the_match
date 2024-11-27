@@ -36,6 +36,7 @@ a {
   border: none;
   bottom: 12%;
   right: 5%;
+  z-index: 9999;
 }
 
 .modal-content{
@@ -195,4 +196,8 @@ button{
 .settings-section__header{
   color: rgb(145, 145, 145);
   border-bottom: 1px solid rgba(255, 255, 255, 0.123);
+}
+
+.gray-text{
+  color: rgb(198, 198, 198);
 }

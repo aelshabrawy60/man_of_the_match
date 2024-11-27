@@ -34,7 +34,7 @@ function BottomNav({circleSize = 50 }) {
   ];
   
   function getXbyId(id){
-    return document.getElementById(id)?.offsetLeft - document.getElementById(id)?.offsetWidth
+    return document.getElementById(id)?.getBoundingClientRect().left - ((document.getElementById('indicatorB').offsetWidth / 2) - 4)
   }
 
   function setXbyRef() {
@@ -54,7 +54,7 @@ function BottomNav({circleSize = 50 }) {
     <div className='p-3 nav-bottom-container'>
         {isCurrentPathInNavs() ? 
           <div ref={indicatorRef} className='nav-indicator p-2'>
-          <div className='inner-circ gradient-btn'>
+          <div className='inner-circ gradient-btn' id='indicatorB' >
 
           </div>
           </div>
@@ -63,7 +63,7 @@ function BottomNav({circleSize = 50 }) {
         }
         
         <div className='d-flex justify-content-around nav-items-p'>
-            {navs_.map((nav)=> <Link className={`nav-item-p ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} id={nav.link} href={nav.link}>{nav.icon}</Link>)}
+            {navs_.map((nav)=> <Link className={`nav-item-p d-flex justify-content-center ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} href={nav.link}><div id={nav.link} >{nav.icon}</div></Link>)}
         </div>
     </div>
   );

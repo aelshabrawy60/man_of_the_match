@@ -97,22 +97,24 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
       addRate(user.uid, parseInt(rate))
   }
   return (
-    <Link href={`Profile/${playerId}`}>
+    
       <div className="player-rate-card d-flex gap-3 w-100 align-items-center justify-content-between">
-        <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
-          <ProfilePhoto img={player?.profilePhoto || "default-image.png"} size={60} badge={player.uid == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
-          <div>
-            <div className={type == 1 ? 'fs-5': ''}>{player?.name || "Player Name"}</div>
-            {type == 1 ? null
-            :
-            <div className="d-flex gap-1">
-              <div className="d-flex align-items-center gap-1"> <FaStar className="star"/> {currentRate.toFixed(2)}</div>
-              <div>({ratesCount})</div>
+        <Link href={`Profile/${playerId}`}>
+          <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
+            <ProfilePhoto img={player?.profilePhoto || "default-image.png"} size={60} badge={player.uid == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
+            <div>
+              <div className={type == 1 ? 'fs-5': ''}>{player?.name || "Player Name"}</div>
+              {type == 1 ? null
+              :
+              <div className="d-flex gap-1">
+                <div className="d-flex align-items-center gap-1"> <FaStar className="star"/> {currentRate.toFixed(2)}</div>
+                <div>({ratesCount})</div>
+              </div>
+              }
+              
             </div>
-            }
-            
           </div>
-        </div>
+        </Link>
         {type == 0 ? 
 
           
@@ -145,7 +147,7 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
         }
         
       </div>
-    </Link>
+    
   );
 }
 
