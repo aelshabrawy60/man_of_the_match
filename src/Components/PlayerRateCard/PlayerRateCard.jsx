@@ -11,6 +11,7 @@ import RateInputCard from "../RateInputCard/RateInputCard";
 import { FaStar } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
 import Link from "next/link";
+import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
 
 
 function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
@@ -99,9 +100,7 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
     <Link href={`Profile/${playerId}`}>
       <div className="player-rate-card d-flex gap-3 w-100 align-items-center justify-content-between">
         <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
-          <div className="player-profile-photo-container">
-            <img src={player?.profilePhoto || "default-image.png"}/>
-          </div>
+          <ProfilePhoto img={player?.profilePhoto || "default-image.png"} size={60} badge={player.uid == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
           <div>
             <div className={type == 1 ? 'fs-5': ''}>{player?.name || "Player Name"}</div>
             {type == 1 ? null

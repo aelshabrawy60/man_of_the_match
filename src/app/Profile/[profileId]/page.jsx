@@ -29,7 +29,7 @@ export default function ProfilePage() {
             <div>
                 <div className="px-3">
                     <div className="my-4">
-                        <PlayerProfileInfo name={player?.name} photo={player?.profilePhoto} rate={(player?.ratesSum/ player?.ratesCount).toFixed(2)} ratesCount={player?.ratesCount}/>
+                        <PlayerProfileInfo playerId={player?.uid} name={player?.name} photo={player?.profilePhoto} rate={(player?.ratesSum/ player?.ratesCount).toFixed(2)} ratesCount={player?.ratesCount}/>
                     </div>
                     <div className="my-4">
                         <PlayerStats games={player?.games} playerId={player.uid}/>

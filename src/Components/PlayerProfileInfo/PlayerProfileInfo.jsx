@@ -2,13 +2,12 @@
 import { FaStar } from "react-icons/fa6";
 
 import './PlayerProfileInfo.css'
-function PlayerProfileInfo({name, rate, ratesCount, photo}) {
+import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
+function PlayerProfileInfo({name, rate, ratesCount, photo, playerId}) {
     
   return (
     <div className='d-flex align-items-center gap-3'>
-        <div className='profile-photo-container'>
-            <img src={photo}></img>
-        </div>
+        <ProfilePhoto img={photo} size={130} badge={playerId == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
         <div className='player-info'>
             <div className='fs-3 mb-2'>
                 {name}

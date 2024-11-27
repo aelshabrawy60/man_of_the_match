@@ -1,4 +1,17 @@
-.profile-photo-container img{
+.profile-photo-container_ {
+    position: relative; /* This makes the container the reference point for absolute positioning */
+    display: inline-block;
+}
+
+.profile-photo-container__img {
     border-radius: 50%;
     object-fit: cover;
+    display: block;
 }
+
+.badge {
+    position: absolute;
+    right: 0; /* Position the badge on the right side */
+    bottom: 0; /* Position the badge at the bottom */
+}
+  

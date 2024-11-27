@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { IoFootball } from "react-icons/io5";
 import { GiSoccerKick } from "react-icons/gi";
-import { FaRegUser } from "react-icons/fa";
-import { IoSettingsOutline } from "react-icons/io5";
+
+import { RiTShirtFill } from "react-icons/ri";
+import { IoSettings } from "react-icons/io5";
 import { useUser } from "../../app/context/UserContext";
 import './BottomNav.css'
 
@@ -26,9 +28,9 @@ function BottomNav({circleSize = 50 }) {
 
 
   let navs_ = [
-    { icon: <FaRegUser />, link: `/Profile/${loading ? '1' : user.uid}` },
-    { icon: <GiSoccerKick />, link: '/Matches' },
-    { icon: <IoSettingsOutline />, link: '/Settings' },
+    { icon: <RiTShirtFill /> , link: `/Profile/${loading ? '1' : user.uid}` },
+    { icon: <GiSoccerKick /> , link: '/Matches' },
+    { icon: <IoSettings />  , link: '/Settings' },
   ];
   
   function getXbyId(id){
@@ -36,8 +38,6 @@ function BottomNav({circleSize = 50 }) {
   }
 
   function setXbyRef() {
-    console.log(pathname)
-    console.log(getXbyId(pathname))
     if (indicatorRef.current) {
       const xPosition = getXbyId(pathname);
       if (xPosition !== undefined) {
@@ -46,15 +46,22 @@ function BottomNav({circleSize = 50 }) {
     }
   }
   
-
+  function isCurrentPathInNavs(){
+    return navs_.some((nav) => pathname === nav.link);
+  }
   
   return (
     <div className='p-3 nav-bottom-container'>
-        <div ref={indicatorRef} className='nav-indicator p-2'>
-            <div className='inner-circ'>
+        {isCurrentPathInNavs() ? 
+          <div ref={indicatorRef} className='nav-indicator p-2'>
+          <div className='inner-circ gradient-btn'>
 
-            </div>
-        </div>
+          </div>
+          </div>
+        :
+          null
+        }
+        
         <div className='d-flex justify-content-around nav-items-p'>
             {navs_.map((nav)=> <Link className={`nav-item-p ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} id={nav.link} href={nav.link}>{nav.icon}</Link>)}
         </div>

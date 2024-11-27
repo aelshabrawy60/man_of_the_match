@@ -31,7 +31,7 @@ export default function MatchPage() {
   const [gameDoc, loading, error] = useDocument(gameRef);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   if (error) {
