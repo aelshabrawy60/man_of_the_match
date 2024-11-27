@@ -7,6 +7,8 @@ import { db } from "../../firebase/clientApp";
 import PlayerProfileInfo from "@/Components/PlayerProfileInfo/PlayerProfileInfo";
 import PlayerStats from "@/Components/PlayerStats/PlayerStats";
 import { useParams } from "next/navigation"; // Use next/navigation for routing
+import MatchesViewer from "@/Components/MatchesViewer/MatchesViewer";
+import PlayerMatchesViewer from "@/Components/PlayerMatchesViewer/PlayerMatchesViewer";
 
 
 export default function ProfilePage() {
@@ -35,7 +37,9 @@ export default function ProfilePage() {
                         <PlayerStats games={player?.games} playerId={player.uid}/>
                     </div>
                 </div>
-                
+                <div>
+                    <PlayerMatchesViewer gamesIds={player?.games}/>
+                </div>
             </div>
         </>
     )
