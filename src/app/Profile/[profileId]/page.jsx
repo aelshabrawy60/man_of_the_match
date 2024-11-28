@@ -9,6 +9,7 @@ import PlayerStats from "@/Components/PlayerStats/PlayerStats";
 import { useParams } from "next/navigation"; // Use next/navigation for routing
 import MatchesViewer from "@/Components/MatchesViewer/MatchesViewer";
 import PlayerMatchesViewer from "@/Components/PlayerMatchesViewer/PlayerMatchesViewer";
+import TriggerApiInBackground from "@/Components/triggerServerClosingVotesCheck";
 
 
 export default function ProfilePage() {
@@ -29,6 +30,7 @@ export default function ProfilePage() {
     return(
         <>
             <div>
+                <TriggerApiInBackground/>
                 <div className="px-3">
                     <div className="my-4">
                         <PlayerProfileInfo playerId={player?.uid} name={player?.name} photo={player?.profilePhoto} rate={(player?.ratesSum/ player?.ratesCount).toFixed(2)} ratesCount={player?.ratesCount}/>
