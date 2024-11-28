@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../app/firebase/clientApp"; // Adjust the import path based on your setup
 import { FaCamera } from "react-icons/fa6";
+import imageCompression from "browser-image-compression";
 import './EditPlayerPhoto.css'
 
 function EditPlayerPhoto({ playerId }) {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState(null);
-  const [playerPhoto, setPlayerPhoto] = useState(null); // To store the current player's photo
-  const [showModal, setShowModal] = useState(false); // To control modal visibility
+  const [playerPhoto, setPlayerPhoto] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [compressedFile, setCompressedFile] = useState(null);
 
-  // Fetch the current player's photo when the component mounts
   useEffect(() => {
     const fetchPlayerPhoto = async () => {
       try {
         const playerRef = doc(db, "players", playerId);
         const playerDoc = await getDoc(playerRef);
         if (playerDoc.exists()) {
-          setPlayerPhoto(playerDoc.data().profilePhoto); // Assuming profilePhoto is the field in Firestore
+          setPlayerPhoto(playerDoc.data().profilePhoto);
         }
       } catch (err) {
         console.error("Error fetching player photo:", err);
@@ -28,68 +30,98 @@ function EditPlayerPhoto({ playerId }) {
     fetchPlayerPhoto();
   }, [playerId]);
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.startsWith("image/")) {
       setFile(selectedFile);
       setError(null);
-      setShowModal(true); // Show the modal when a file is selected
+
+      try {
+        const options = {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 250,
+          useWebWorker: true
+        };
+        
+        const compressedImage = await imageCompression(selectedFile, options);
+        setCompressedFile(compressedImage);
+        setShowModal(true);
+      } catch (err) {
+        console.error(err);
+        setError("Error compressing image. Please try again.");
+      }
     } else {
       setError("Please select a valid image file.");
     }
   };
 
   const handleUpload = async () => {
-    if (!file) {
+    if (!compressedFile) {
       setError("No file selected.");
       return;
     }
 
     setUploading(true);
+    setUploadProgress(0);
 
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET); // Using environment variable for preset
+    formData.append("file", compressedFile);
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
 
     try {
-      // Upload to Cloudinary
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, // Using environment variable for cloud name
-        {
-          method: "POST",
-          body: formData,
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = (event.loaded / event.total) * 100;
+          setUploadProgress(percentComplete);
         }
-      );
+      };
 
-      const data = await res.json();
+      xhr.onload = async function() {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          if (data.secure_url) {
+            const playerRef = doc(db, "players", playerId);
+            await updateDoc(playerRef, { profilePhoto: data.secure_url });
+            setPlayerPhoto(data.secure_url);
+          } else {
+            throw new Error("Failed to upload image.");
+          }
+        } else {
+          throw new Error("Upload failed.");
+        }
+      };
 
-      if (data.secure_url) {
-        // Update Firestore with the uploaded photo URL
-        const playerRef = doc(db, "players", playerId);
-        await updateDoc(playerRef, { profilePhoto: data.secure_url });
-        setPlayerPhoto(data.secure_url); // Update the displayed photo
-      } else {
-        throw new Error("Failed to upload image.");
-      }
+      xhr.onerror = function() {
+        throw new Error("Upload failed.");
+      };
+
+      xhr.send(formData);
     } catch (err) {
       setError(err.message || "Something went wrong.");
     } finally {
       setUploading(false);
       setFile(null);
-      setShowModal(false); // Close the modal after upload
+      setCompressedFile(null);
+      setShowModal(false);
+      setUploadProgress(0);
     }
   };
 
   const handleCancel = () => {
-    setFile(null); // Reset file selection
-    setShowModal(false); // Close the modal
+    setFile(null);
+    setCompressedFile(null);
+    setShowModal(false);
+    setUploadProgress(0);
   };
 
   return (
     <div style={containerStyle}>
       <div className="change-img-container">
         <img
-          src={playerPhoto || "default-photo-url"} // Display current player photo or a placeholder
+          src={playerPhoto || "/default-photo-url.jpg"}
           alt="Player"
         />
         <button onClick={() => document.getElementById('fileInput').click()} className="edit-photo-btn"><FaCamera /></button>
@@ -101,13 +133,12 @@ function EditPlayerPhoto({ playerId }) {
         />
       </div>
 
-      {/* Modal to show the uploaded photo */}
       {showModal && (
         <div style={modalStyle}>
           <div style={modalContentStyle}>
             <h3 style={modalTitleStyle}>Confirm New Photo</h3>
             <img
-              src={URL.createObjectURL(file)}
+              src={URL.createObjectURL(compressedFile)}
               alt="Uploaded Preview"
               style={modalImageStyle}
             />
@@ -117,10 +148,16 @@ function EditPlayerPhoto({ playerId }) {
                 disabled={uploading}
                 style={saveButtonStyle}
               >
-                {uploading ? "Uploading..." : "Save"}
+                {uploading ? "جاري الرفع" : "حفظ"}
               </button>
-              <button onClick={handleCancel} style={cancelButtonStyle}>Cancel</button>
+              <button onClick={handleCancel} style={cancelButtonStyle}>الغاء</button>
             </div>
+            {uploading && (
+              <div style={progressContainerStyle}>
+                <div style={{...progressBarStyle, width: `${uploadProgress}%`}}></div>
+                <span style={progressTextStyle}>{Math.round(uploadProgress)}%</span>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -135,11 +172,6 @@ const containerStyle = {
   padding: "20px",
   fontFamily: "'Arial', sans-serif",
 };
-
-
-
-
-
 
 const modalStyle = {
   position: "fixed",
