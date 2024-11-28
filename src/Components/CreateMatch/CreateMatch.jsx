@@ -8,12 +8,14 @@ import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { IoAddSharp } from "react-icons/io5";
 
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../app/firebase/clientApp";
 import './CreateMatch.css'
 import EditMatch from "../EditMatch/EditMatch";
 import closeVotes from "@/app/functions/closeVotes";
 
 function CreateMatch() {
+  const [user, loading_, error_] = useAuthState(auth);
   const [players, setPlayers] = useState([]);
   const [day, setDay] = useState(new Date().toISOString().split("T")[0])
   const [time, setTime] = useState(new Date().toTimeString().slice(0, 5))
@@ -55,12 +57,9 @@ function CreateMatch() {
         return;
       }
 
-      // Generate a unique ID for the match
-      const matchId = uuidv4();
-
       // Store the match data with the unique ID
       const matchData = {
-        id: matchId, // Add the unique match ID
+        creator: user.uid,
         date: convertToFirebaseTimestamp(day, time),
         endDate: calcEndDate(day, time),
         closedVotes: false, // Store the date as a string from the input

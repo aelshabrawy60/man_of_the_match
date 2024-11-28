@@ -16,7 +16,8 @@ import { MdEdit } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import PlayerRateCardsViewer from "@/Components/PlayersRateCardsViewer/PlayerRateCardsViewer";
 import { getFullDate, getTime } from "@/app/functions/dateF";
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../app/firebase/clientApp";
 
 
 
@@ -24,6 +25,7 @@ import { getFullDate, getTime } from "@/app/functions/dateF";
 export default function MatchPage() {
   const params = useParams(); // Access the matchId from the URL params
   const { matchId } = params; // Extract matchId from URL
+  const [user, loading_, error_] = useAuthState(auth);
 
   // Firestore reference to the specific game document
   const gameRef = doc(db, "games", matchId);
@@ -56,22 +58,31 @@ export default function MatchPage() {
           </div>
         </div>
         <PlayerRateCardsViewer matchId={matchId}/>
-          <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          {
+            gameData.creator == user.uid ?
+            <>
+            <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <MdEdit />
-          </button>
-          <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-scrollable">
-                    <div className="modal-content">
-                    <div className="modal-header mb-2 d-flex justify-content-between">
-                        <h1 className="modal-title fs-5" id="staticBackdropLabel">تعديل المباراة</h1>
-                        <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
-                    </div>
-                    <div className="modal-body">
-                        <EditMatch gameId={matchId}/>
-                    </div>
-                    </div>
+            </button>
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-scrollable">
+                <div className="modal-content">
+                <div className="modal-header mb-2 d-flex justify-content-between">
+                    <h1 className="modal-title fs-5" id="staticBackdropLabel">تعديل المباراة</h1>
+                    <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
                 </div>
-          </div>
+                <div className="modal-body">
+                    <EditMatch gameId={matchId}/>
+                </div>
+                </div>
+            </div>
+            </div>
+            </> 
+            :
+            null
+          }
+          
+          
       </div>
     );
   }
