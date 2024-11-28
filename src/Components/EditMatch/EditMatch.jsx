@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { db } from "../../app/firebase/clientApp"; 
-import { doc, getDoc, updateDoc } from "firebase/firestore"; // Add updateDoc here
+import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore"; // Add updateDoc here
 import { IoAddSharp } from "react-icons/io5";
 import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
@@ -38,7 +38,7 @@ function EditMatch({ gameId }) {
           setLocation(matchData.location);
 
           // Check if the match time has passed
-          const matchDate = new Date(`${matchData.day}T${matchData.time}`);
+          const matchDate = matchData.date.toDate();
           const currentTime = new Date();
           if (currentTime > matchDate) {
             setIsEditable(false); // Disable editing if the match has started

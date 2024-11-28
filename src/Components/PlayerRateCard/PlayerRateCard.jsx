@@ -5,8 +5,7 @@ import "./PlayerRateCard.css";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../app/firebase/clientApp";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../app/firebase/clientApp";
+
 import RateInputCard from "../RateInputCard/RateInputCard";
 import { FaStar } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
@@ -14,19 +13,18 @@ import Link from "next/link";
 import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
 
 
-function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
+function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateEnabeld, user}) {
 
-  const [user, loading, error] = useAuthState(auth);
   const rateDocId = `${playerId}_${matchId}`; // Unique document ID
   const rateRef = doc(db, "rates", rateDocId);
   const [rateData] = useDocument(rateRef);
-
   const [currentRate, setCurrentRate] = useState(rate);
   const [ratesCount, setRatesCount] = useState(ratesCount_);
 
   // Player reference and fetching data using `useDocument`
   const playerRef = doc(db, "players", playerId);
   const [playerData, playerLoading, playerError] = useDocument(playerRef);
+
 
   // Update local state when rateData is fetched
   useEffect(() => {
@@ -120,9 +118,21 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, }) {
           
           <div className="me-2">
             {/*player can not rate himself */}
-            {user.uid != playerId ? <button type="button" className="main-btn" data-bs-toggle="modal" data-bs-target= {"#staticBackdrop" + player?.uid}>
-                          تقييم
-            </button>: <div >انت</div>}
+            {rateEnabeld ? (
+                user.uid !== playerId ? (
+                    <button
+                        type="button"
+                        className="main-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target={"#staticBackdrop" + player?.uid}
+                    >
+                        تقييم
+                    </button>
+                ) : (
+                    <div>انت</div>
+                )
+            ) : null}
+            
             
             <div className="modal fade" id={"staticBackdrop" + player?.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-scrollable">

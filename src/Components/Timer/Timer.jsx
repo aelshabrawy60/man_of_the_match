@@ -21,7 +21,6 @@ const CountdownTimer = ({ endDate }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDate));
 
   useEffect(() => {
-    console.log(endDate)
     const interval = setInterval(() => {
       setTimeLeft(calculateTimeLeft(endDate));
     }, 1000); // Update every second
