@@ -25,7 +25,7 @@ function PlayerMatchesViewer({gamesIds}) {
             documents.map(doc => {
             return (
                 <div key={doc.docId} className='col-12'>
-                    <MatchCard time={String(doc.time)} day={String(doc.day)} id={doc.docId} MOTM={doc?.manOfTheMatch} location={doc.location}/>
+                    <MatchCard date={doc.date} id={doc.docId} MOTM={doc?.manOfTheMatch} location={doc.location}/>
                 </div>
             );
             })

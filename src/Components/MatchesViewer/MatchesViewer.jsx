@@ -40,7 +40,7 @@ function MatchesViewer() {
             const matchData = doc.data();  // Get the data from each document
             return (
               <div key={doc.id} className='col-12'>
-                  <MatchCard time={String(matchData.time)} day={String(matchData.day)} id={doc.id} MOTM={matchData?.manOfTheMatch} location={matchData.location}/>
+                  <MatchCard date={matchData.date} id={doc.id} MOTM={matchData?.manOfTheMatch} location={matchData.location}/>
               </div>
             );
           })

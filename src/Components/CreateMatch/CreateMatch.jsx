@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import { db } from "../../app/firebase/clientApp"; // Import your Firestore instance
-import { collection, addDoc } from "firebase/firestore"; // For adding data to Firestore
+import { collection, addDoc , Timestamp} from "firebase/firestore"; // For adding data to Firestore
 import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs
 import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { IoAddSharp } from "react-icons/io5";
 
+
 import './CreateMatch.css'
 import EditMatch from "../EditMatch/EditMatch";
+import closeVotes from "@/app/functions/closeVotes";
 
 function CreateMatch() {
   const [players, setPlayers] = useState([]);
-  const [date, setDate] = useState("");
   const [day, setDay] = useState(new Date().toISOString().split("T")[0])
   const [time, setTime] = useState(new Date().toTimeString().slice(0, 5))
   const [location, setLocation] = useState(""); // To store the match location
@@ -32,6 +33,18 @@ function CreateMatch() {
     console.log(players);
   }
 
+  function convertToFirebaseTimestamp(dateString, timeString) {
+    const dateTimeString = `${dateString}T${timeString}:00`; // Combine date and time into one string
+    const jsDate = new Date(dateTimeString); // Convert to a JavaScript Date object
+    return Timestamp.fromDate(jsDate); // Convert to Firebase Timestamp
+  }
+
+  function calcEndDate(dateString, timeString){
+    const dateTimeString = `${dateString}T${timeString}:00`; // Combine date and time into one string
+    const jsDate = new Date(dateTimeString);
+    jsDate.setHours(jsDate.getHours() + 5) 
+    return Timestamp.fromDate(jsDate)
+  }
   // Function to save match data to Firebase Firestore
   const saveMatch = async () => {
     try {
@@ -48,8 +61,9 @@ function CreateMatch() {
       // Store the match data with the unique ID
       const matchData = {
         id: matchId, // Add the unique match ID
-        day: String(day),
-        time: String(time), // Store the date as a string from the input
+        date: convertToFirebaseTimestamp(day, time),
+        endDate: calcEndDate(day, time),
+        closedVotes: false, // Store the date as a string from the input
         location: location,
         players: players.map((player) => ({
           uid: player[0], // Only store the UID for each player

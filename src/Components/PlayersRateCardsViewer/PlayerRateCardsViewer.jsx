@@ -60,7 +60,6 @@ function PlayerRateCardsViewer({ matchId }) {
       const gameData = gameDoc.data();
       if(!gameData.closedVotes){
         if(isTheVotesClosed(gameData.time, gameData.day)){
-          closeVotes()
       }
     }
     }

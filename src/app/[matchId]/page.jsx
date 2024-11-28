@@ -15,6 +15,7 @@ import EditMatch from "@/Components/EditMatch/EditMatch";
 import { MdEdit } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import PlayerRateCardsViewer from "@/Components/PlayersRateCardsViewer/PlayerRateCardsViewer";
+import { getFullDate, getTime } from "@/app/functions/dateF";
 
 
 
@@ -49,8 +50,8 @@ export default function MatchPage() {
         <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '260px'}}>
           <img src="field.svg" className="field"></img>
           <div className="d-flex flex-column align-items-center gap-3" style={{position: 'relative', zIndex: '99'}}>
-            <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {gameData?.day}</div>
-            <div className="d-flex fs-5 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(gameData?.time)}</div>
+            <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {getFullDate(gameData?.date)}</div>
+            <div className="d-flex fs-5 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(getTime(gameData?.date))}</div>
             <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
           </div>
         </div>

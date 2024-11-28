@@ -55,6 +55,19 @@ function EditMatch({ gameId }) {
       fetchMatchData();
     }
   }, [gameId]);
+  
+  function convertToFirebaseTimestamp(dateString, timeString) {
+    const dateTimeString = `${dateString}T${timeString}:00`; // Combine date and time into one string
+    const jsDate = new Date(dateTimeString); // Convert to a JavaScript Date object
+    return Timestamp.fromDate(jsDate); // Convert to Firebase Timestamp
+  }
+
+  function calcEndDate(dateString, timeString){
+    const dateTimeString = `${dateString}T${timeString}:00`; // Combine date and time into one string
+    const jsDate = new Date(dateTimeString);
+    jsDate.setHours(jsDate.getHours() + 5) 
+    return Timestamp.fromDate(jsDate)
+  }
 
   // Function to update the match
   const updateMatch = async () => {
@@ -77,8 +90,8 @@ function EditMatch({ gameId }) {
       // Update match data in Firestore
       const matchDoc = doc(db, "games", gameId);
       await updateDoc(matchDoc, {
-        day: day,
-        time: time,
+        date: convertToFirebaseTimestamp(day, time),
+        endDate: calcEndDate(day, time),
         location: location,
         players: players.map(player => ({ uid: player.uid })), // Store players as an array of maps with uid
       });
