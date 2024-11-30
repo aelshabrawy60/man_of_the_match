@@ -5,11 +5,20 @@ export function middleware(req) {
   const url = req.nextUrl.clone();
 
   // Allow public assets like static files and images
-  const PUBLIC_FILE = /\.(.*)$/; // Matches files like .jpg, .png, .css, .js, etc.
+  const PUBLIC_FILE = /\.(.*)$/;
   const ALLOWED_PATHS = ["/Auth", "/_next", "/favicon.ico", "/images", "/public"];
 
   // Skip middleware for static files or paths explicitly allowed
   if (PUBLIC_FILE.test(url.pathname) || ALLOWED_PATHS.some(path => url.pathname.startsWith(path))) {
+    return NextResponse.next();
+  }
+
+  // If no cookie token is found, check if we're redirecting from Auth page
+  const referer = req.headers.get("referer") || "";
+  const isAuthRedirect = referer.includes("/Auth");
+  
+  // Allow the first request after authentication
+  if (isAuthRedirect && url.pathname === "/Matches") {
     return NextResponse.next();
   }
 
@@ -22,7 +31,7 @@ export function middleware(req) {
   return NextResponse.next();
 }
 
-// Matcher configuration (if needed)
+// Matcher configuration
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|Auth).*)"],
 };

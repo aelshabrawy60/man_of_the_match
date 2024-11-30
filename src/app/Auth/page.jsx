@@ -54,7 +54,7 @@ export default function AuthPage() {
 
   // Handle email-based authentication
   const handleEmailAuth = async () => {
-    if (!validateForm()) return; // Ensure form is valid before proceeding
+    if (!validateForm()) return;
 
     setIsLoading(true);
     try {
@@ -71,20 +71,39 @@ export default function AuthPage() {
 
       // Retrieve and store the auth token
       const token = await user.getIdToken();
-      Cookies.set("authToken", token, { 
-        expires: 365,
-        path: '/',
-        sameSite: 'strict',
-        secure: window.location.protocol === 'https:'
-      });
-
-      // Wait a brief moment to ensure cookie is set
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Prefetch the matches page
-      await router.prefetch('/Matches');
       
-      // Redirect to Matches page after success
+      // Set cookie with multiple attempts
+      let cookieSet = false;
+      for (let i = 0; i < 3 && !cookieSet; i++) {
+        try {
+          Cookies.set("authToken", token, { 
+            expires: 365,
+            path: '/',
+            sameSite: 'lax', 
+            secure: window.location.protocol === 'https:'
+          });
+          
+          // Verify cookie was set
+          const verifyToken = Cookies.get("authToken");
+          if (verifyToken) {
+            cookieSet = true;
+          } else {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+        } catch (e) {
+          console.warn("Cookie setting attempt failed:", e);
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      }
+
+      // Use localStorage as fallback if cookie setting fails
+      if (!cookieSet) {
+        localStorage.setItem("authToken", token);
+        console.log("Using localStorage fallback for auth token");
+      }
+
+      // Prefetch and redirect
+      await router.prefetch('/Matches');
       router.push("/Matches");
     } catch (err) {
       console.error("Authentication Error:", err);
@@ -106,15 +125,36 @@ export default function AuthPage() {
 
       // Retrieve and store the auth token
       const token = await user.getIdToken();
-      Cookies.set("authToken", token, { 
-        expires: 365,
-        path: '/',
-        sameSite: 'strict',
-        secure: window.location.protocol === 'https:'
-      });
+      
+      // Set cookie with multiple attempts
+      let cookieSet = false;
+      for (let i = 0; i < 3 && !cookieSet; i++) {
+        try {
+          Cookies.set("authToken", token, { 
+            expires: 365,
+            path: '/',
+            sameSite: 'lax', 
+            secure: window.location.protocol === 'https:'
+          });
+          
+          // Verify cookie was set
+          const verifyToken = Cookies.get("authToken");
+          if (verifyToken) {
+            cookieSet = true;
+          } else {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+        } catch (e) {
+          console.warn("Cookie setting attempt failed:", e);
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      }
 
-      // Wait a brief moment to ensure cookie is set
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Use localStorage as fallback if cookie setting fails
+      if (!cookieSet) {
+        localStorage.setItem("authToken", token);
+        console.log("Using localStorage fallback for auth token");
+      }
 
       // Redirect immediately
       router.push("/Matches");
@@ -124,7 +164,7 @@ export default function AuthPage() {
         ...user,
         name: user.displayName || user.email || "Unknown",
       };
-      createUserDoc(userWithName); // No need to await
+      createUserDoc(userWithName);
     } catch (err) {
       console.error("Google Auth Error:", err);
       setError(err);
