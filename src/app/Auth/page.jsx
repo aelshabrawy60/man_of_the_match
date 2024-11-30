@@ -70,9 +70,20 @@ export default function AuthPage() {
       }
 
       // Retrieve and store the auth token
-      const token = await user.getIdToken(); // Firebase method to get ID token
-      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+      const token = await user.getIdToken();
+      Cookies.set("authToken", token, { 
+        expires: 365,
+        path: '/',
+        sameSite: 'strict',
+        secure: window.location.protocol === 'https:'
+      });
 
+      // Wait a brief moment to ensure cookie is set
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Prefetch the matches page
+      await router.prefetch('/Matches');
+      
       // Redirect to Matches page after success
       router.push("/Matches");
     } catch (err) {
@@ -95,7 +106,15 @@ export default function AuthPage() {
 
       // Retrieve and store the auth token
       const token = await user.getIdToken();
-      Cookies.set("authToken", token, { expires: 365 }); // Cookie expires in 1 year
+      Cookies.set("authToken", token, { 
+        expires: 365,
+        path: '/',
+        sameSite: 'strict',
+        secure: window.location.protocol === 'https:'
+      });
+
+      // Wait a brief moment to ensure cookie is set
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Redirect immediately
       router.push("/Matches");
