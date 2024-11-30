@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import "./PlayerRateCard.css";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
@@ -11,6 +11,7 @@ import { FaStar } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
 import Link from "next/link";
 import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
+import RatePlayingStyle from "../RatePlayingStyle/RatePlayingStyle";
 
 
 function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateEnabeld, user}) {
@@ -80,6 +81,14 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateE
   }
   
 
+  const modalTriggerRef = React.useRef(null);
+
+  function giveRate(rate){
+      if (modalTriggerRef.current) {
+          modalTriggerRef.current.click();
+      }
+      addRate(user.uid, parseInt(rate))
+  }
   if (playerLoading) {
     return <div>Loading player data...</div>;
   }
@@ -91,72 +100,92 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateE
   const player = playerData?.data();
 
 
-  function giveRate(rate){
-      addRate(user.uid, parseInt(rate))
-  }
   return (
-    
-      <div className="player-rate-card d-flex gap-3 w-100 align-items-center justify-content-between">
-        <Link href={`Profile/${playerId}`}>
-          <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
-            <ProfilePhoto img={player?.profilePhoto || "default-image.png"} size={60} badge={player.uid == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
-            <div>
-              <div className={type == 1 ? 'fs-5': ''}>{player?.name || "Player Name"}</div>
-              {type == 1 ? null
-              :
-              <div className="d-flex gap-1">
-                <div className="d-flex align-items-center gap-1"> <FaStar className="star"/> {currentRate.toFixed(2)}</div>
-                <div>({ratesCount})</div>
-              </div>
-              }
-              
-            </div>
-          </div>
-        </Link>
-        {type == 0 ? 
 
-          
-          <div className="me-2">
-            {/*player can not rate himself */}
-            {rateEnabeld ? (
-                user.uid !== playerId ? (
-                    <button
-                        type="button"
-                        className="main-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target={"#staticBackdrop" + player?.uid}
-                    >
-                        تقييم
-                    </button>
-                ) : (
-                    <div>انت</div>
-                )
-            ) : null}
-            
-            
-            <div className="modal fade" id={"staticBackdrop" + player?.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-scrollable">
-                    <div className="modal-content">
-                    <div className="modal-header mb-2 d-flex justify-content-between">
-                        <h1 className="modal-title fs-5" id="staticBackdropLabel">قم بتقييم <span>{player?.name}</span></h1>
-                        <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
-                    </div>
-                    <div className="modal-body">
-                        <RateInputCard giveRate={giveRate}/>
-                    </div>
-                    </div>
+      <>
+        <div className="player-rate-card d-flex gap-3 w-100 align-items-center justify-content-between">
+          <Link href={`Profile/${playerId}`}>
+            <div className="d-flex gap-3 align-items-center" style={{maxWidth: '220px'}}>
+              <ProfilePhoto img={player?.profilePhoto || "default-image.png"} size={60} badge={player.uid == 'tqvz2WOgOBMdnAHfmF4Tf392hwR2' ? '/star-badge.png' : null}/>
+              <div>
+                <div className={type == 1 ? 'fs-5': ''}>{player?.name || "Player Name"}</div>
+                {type == 1 ? null
+                :
+                <div className="d-flex gap-1">
+                  <div className="d-flex align-items-center gap-1"> <FaStar className="star"/> {currentRate.toFixed(2)}</div>
+                  <div>({ratesCount})</div>
                 </div>
+                }
+                
+              </div>
             </div>
-          </div>
-        
-        : 
+          </Link>
+          {type == 0 ? 
+
+            
+            <div className="me-2">
+              {/*player can not rate himself */}
+              {rateEnabeld ? (
+                  user.uid !== playerId ? (
+                      <button
+                          type="button"
+                          className="main-btn"
+                          data-bs-toggle="modal"
+                          data-bs-target={"#staticBackdrop" + player?.uid}
+                      >
+                          تقييم
+                      </button>
+                  ) : (
+                      <div>انت</div>
+                  )
+              ) : null}
+              
+              
+              <div className="modal fade" id={"staticBackdrop" + player?.uid}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div className="modal-dialog modal-dialog-scrollable">
+                      <div className="modal-content">
+                      <div className="modal-header mb-2 d-flex justify-content-between">
+                          <h1 className="modal-title fs-5" id="staticBackdropLabel">قم بتقييم <span>{player?.name}</span></h1>
+                          <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
+                      </div>
+                      <div className="modal-body">
+                          <RateInputCard giveRate={giveRate}/>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
           
-          <div className="me-3">
-            <div className="rate-container d-flex align-items-center"><span className="fs-5 ms-2">{currentRate.toFixed(1)}</span><FaStar className="star fs-5"/></div>
+          : 
+            
+            <div className="me-3">
+              <div className="rate-container d-flex align-items-center"><span className="fs-5 ms-2">{currentRate.toFixed(1)}</span><FaStar className="star fs-5"/></div>
+            </div>
+          }
+          
+        </div>
+
+        <div className="modal fade" id={"staticBackdrop" + player?.uid + "2"}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <button
+            ref={modalTriggerRef}
+            type="button"
+            className="d-none"
+            data-bs-toggle="modal"
+            data-bs-target={"#staticBackdrop" + player?.uid + "2"}
+          />
+          <div className="modal-dialog modal-dialog-scrollable">
+              <div className="modal-content">
+                  <div className="modal-header mb-2 d-flex justify-content-between">
+                      <h1 className="modal-title fs-5" id="staticBackdropLabel">قم بتقييم <span>{player?.name}</span></h1>
+                      <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
+                  </div>
+                  <div className="modal-body">
+                    <RatePlayingStyle matchId={matchId} reciverId={playerId} senderId={user?.uid}/>
+                  </div>
+                  </div>
+              </div>
           </div>
-        }
-        
-      </div>
+      </>
     
   );
 }
