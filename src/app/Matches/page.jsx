@@ -27,7 +27,7 @@ export default function Matches(){
                         <h1 className="modal-title fs-5" id="staticBackdropLabel">اضافة مباراة</h1>
                         <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
                     </div>
-                    <div className="modal-body p-0">
+                    <div className="modal-body">
                         <CreateMatch/>
                     </div>
                     </div>

@@ -5,6 +5,9 @@ import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore"; // Add u
 import { IoAddSharp } from "react-icons/io5";
 import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
+import { IoCalendarOutline } from "react-icons/io5";
+import { IoTimeOutline } from "react-icons/io5";
+import {getTime } from "@/app/functions/dateF";
 import './EditMatch.css';
 
 function EditMatch({ gameId }) {
@@ -33,8 +36,10 @@ function EditMatch({ gameId }) {
             })
           );
           setPlayers(temp || []);
-          setDay(matchData.day);
-          setTime(matchData.time);
+          const date = matchData.date.toDate();
+          const formattedDate = date.toISOString().split("T")[0];
+          setDay(formattedDate);
+          setTime(getTime(matchData.date));
           setLocation(matchData.location);
 
           // Check if the match time has passed
@@ -131,36 +136,55 @@ function EditMatch({ gameId }) {
     <div className="edit-match-container">
       <div className="row m-0 row-gap-3 mb-4">
         <div className="d-flex flex-column col-6 gap-2">
-          <label>اليوم</label>
-          <input
-            type="date"
-            value={day}
-            onChange={(e) => setDay(e.target.value)}
-            disabled={!isEditable} // Disable editing if not editable
-          />
+          <label className="create-match-label">اليوم</label>
+          <div className="position-relative">
+            <input
+              type="date"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              disabled={!isEditable} // Disable editing if not editable
+              className="create-match-input"
+              id="date-input"
+            />
+            <IoCalendarOutline 
+              className="position-absolute end-0 top-50 translate-middle-y input-icon" 
+              onClick={() => document.getElementById('date-input').showPicker()}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
         </div>
         <div className="d-flex flex-column col-6 gap-2">
-          <label>الساعة</label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            disabled={!isEditable} // Disable editing if not editable
-          />
+          <label className="create-match-label">الساعة</label>
+            <div className="position-relative">
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              disabled={!isEditable} // Disable editing if not editable
+              className="create-match-input"
+              id="time-input"
+            />
+            <IoTimeOutline 
+                className="position-absolute end-0 top-50 translate-middle-y input-icon" 
+                onClick={() => document.getElementById('time-input').showPicker()}
+                style={{ cursor: 'pointer' }}
+            />
+          </div>
         </div>
         <div className="d-flex flex-column w-100 gap-2">
-          <label>الملعب</label>
+          <label className="create-match-label">الملعب</label>
           <input
             type="text"
             placeholder="اسم الملعب"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             disabled={!isEditable} // Disable editing if not editable
+            className="create-match-input"
           />
         </div>
       </div>
 
-      <div className="players p-2">
+      <div className="players p-3">
         <div className="fs-5 mb-3">اللاعبين</div>
         
         {players.map((player) => (
@@ -169,13 +193,14 @@ function EditMatch({ gameId }) {
         <div>
           <div className="dropdown mt-4">
             <button
-              className="fs-4 d-flex justify-content-center align-items-center main-btn stroke-btn w-100"
+              className="add-player-btn d-flex justify-content-center align-items-center"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
               disabled={false} // Disable the button if match is not editable
+              
             >
-              <IoAddSharp />
+              <IoAddSharp className="fs-4" />
             </button>
             <div className="dropdown-menu p-0 w-100">
               <PlayerDropdown isCliked={addPlayer} />
@@ -184,9 +209,9 @@ function EditMatch({ gameId }) {
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 px-3">
         <button
-          className="main-btn w-100 fs-5"
+          className="main-btn w-100 save-match-btn gradient-btn"
           onClick={updateMatch}
           data-bs-dismiss="modal"
           aria-label="Close"

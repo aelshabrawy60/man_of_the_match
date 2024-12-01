@@ -88,7 +88,7 @@ function CreateMatch() {
     }
   };
   return (
-    <div className="create-match-container pt-4 px-1">
+    <div className="create-match-container pt-4">
       <div className="row m-0 row-gap-3 mb-4">
         <div className="d-flex flex-column col-6 gap-2">
           <label className="create-match-label">اليوم</label>

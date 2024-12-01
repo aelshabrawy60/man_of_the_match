@@ -1,0 +1,97 @@
+..dropdown-menu{
+    --bs-dropdown-bg: none !important;
+}
+
+.create-match-container {
+    backdrop-filter: blur(10px);
+}
+
+.create-match-input {
+    background: rgba(255, 255, 255, 0.059);
+    padding: 12px;
+    padding-right: 45px !important;
+    border: 1px solid rgba(255, 255, 255, 0.123);
+    border-radius: 8px;
+    color: var(--foreground);
+    width: 100%;
+    transition: all 0.3s ease;
+    direction: rtl;
+}
+
+/* Hide default calendar and time icons */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-time-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+    opacity: 0;
+}
+
+.input-icon {
+    color: #a3a3a3;
+    font-size: 1.4rem;
+    z-index: 2;
+    right: 15px !important;
+}
+
+/* Position icons */
+.date-icon {
+    left: 12px;
+}
+
+.time-icon {
+    left: 15px;
+}
+
+.create-match-input:focus {
+    outline: none;
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 2px rgba(0, 133, 62, 0.2);
+}
+
+.create-match-input::placeholder {
+    color: #a3a3a3;
+}
+
+.create-match-label {
+    color: #a3a3a3;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.players-section {
+}
+
+.players-title {
+    color: #a3a3a3;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.add-player-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.123);
+    border-radius: 8px;
+    padding: 0.7rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.add-player-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 133, 62, 0.2);
+}
+
+.save-match-btn {
+    margin-top: 2rem;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.save-match-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 133, 62, 0.2);
+}
