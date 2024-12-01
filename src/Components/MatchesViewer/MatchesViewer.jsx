@@ -16,6 +16,14 @@ function MatchesViewer() {
 
   // Create a query based on filter
   const gamesQuery = (() => {
+    // If user is not authenticated and filter requires auth, default to 'all'
+    if (!user && (filterType === 'mine' || filterType === 'created')) {
+      return query(
+        collection(db, 'games'),
+        orderBy('date', 'desc')
+      );
+    }
+
     switch(filterType) {
       case 'mine':
         return query(
