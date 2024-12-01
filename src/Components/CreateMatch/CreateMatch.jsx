@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs
 import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { IoAddSharp } from "react-icons/io5";
+import { IoCalendarOutline } from "react-icons/io5";
+import { IoTimeOutline } from "react-icons/io5";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
@@ -86,59 +88,92 @@ function CreateMatch() {
     }
   };
   return (
-    <div className="creat-match-container">
+    <div className="create-match-container pt-4 px-1">
       <div className="row m-0 row-gap-3 mb-4">
         <div className="d-flex flex-column col-6 gap-2">
-          <label>اليوم</label>
-          <input
-            type="date"
-            value={day}
-            onChange={(e) => {
-              setDay(e.target.value); // Store the date directly as a string
-              console.log("Date selected in input field:", e.target.value); // Log date immediately on change
-            }}
-          />
+          <label className="create-match-label">اليوم</label>
+          <div className="position-relative">
+            <input
+              type="date"
+              value={day}
+              onChange={(e) => {
+                setDay(e.target.value); 
+                console.log("Date selected in input field:", e.target.value); 
+              }}
+              className="create-match-input"
+              id="date-input"
+            />
+            <IoCalendarOutline 
+              className="position-absolute end-0 top-50 translate-middle-y input-icon" 
+              onClick={() => document.getElementById('date-input').showPicker()}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
         </div>
         <div className="d-flex flex-column col-6 gap-2">
-          <label>الساعة</label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => {
-              setTime(e.target.value); // Store the date directly as a string
-              console.log("Date selected in input field:", e.target.value); // Log date immediately on change
-            }}
-          />
+          <label className="create-match-label">الساعة</label>
+          <div className="position-relative">
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => {
+                setTime(e.target.value); 
+                console.log("Date selected in input field:", e.target.value); 
+              }}
+              className="create-match-input"
+              id="time-input"
+            />
+            <IoTimeOutline 
+              className="position-absolute end-0 top-50 translate-middle-y input-icon" 
+              onClick={() => document.getElementById('time-input').showPicker()}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
         </div>
         <div className="d-flex flex-column w-100 gap-2">
-          <label>الملعب</label>
+          <label className="create-match-label">الملعب</label>
           <input
             type="text"
             placeholder="اسم الملعب"
             value={location}
-            onChange={(e) => setLocation(e.target.value)} // Update the location state
+            onChange={(e) => setLocation(e.target.value)} 
+            className="create-match-input"
           />
         </div>
       </div>
-      <div className="players p-2">
-        <div className="fs-5 mb-3">اللاعبين</div>
-        {players.map((player) => (
-          <PlayerCard key={player[0]} name={player[1]} photo={player[2]} />
-        ))}
+      <div className="players-section p-3">
+        <div className="players-title">اللاعبين</div>
+        <div className="players-list">
+          {players.map((player) => (
+            <PlayerCard key={player[0]} name={player[1]} photo={player[2]} />
+          ))}
+        </div>
         <div>
           <div className="dropdown mt-4">
-            <button className="fs-4 d-flex justify-content-center align-items-center main-btn stroke-btn w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <IoAddSharp />
+            <button 
+              className="add-player-btn d-flex justify-content-center align-items-center" 
+              type="button" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false"
+            >
+              <IoAddSharp className="fs-4" />
             </button>
             <div className="dropdown-menu p-0 w-100">
               <PlayerDropdown isCliked={addPlayer}/>
             </div>
           </div>
-      </div>
+        </div>
       </div>
       
-      <div className="mt-5">
-        <button className="main-btn w-100 fs-5" onClick={saveMatch} data-bs-dismiss="modal" aria-label="Close">حفظ</button>
+      <div className="px-3">
+        <button 
+          className="main-btn w-100 save-match-btn gradient-btn" 
+          onClick={saveMatch} 
+          data-bs-dismiss="modal" 
+          aria-label="Close"
+        >
+          حفظ المباراة
+        </button>
       </div>
     </div>
   );

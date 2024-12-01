@@ -21,13 +21,13 @@ export default function Matches(){
                 
 
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-scrollable">
-                    <div className="modal-content">
-                    <div className="modal-header mb-2 d-flex justify-content-between">
+                <div className="modal-dialog m-0 modal-dialog-scrollable">
+                    <div className="modal-content h-100">
+                    <div className="modal-header d-flex justify-content-between">
                         <h1 className="modal-title fs-5" id="staticBackdropLabel">اضافة مباراة</h1>
                         <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
                     </div>
-                    <div className="modal-body">
+                    <div className="modal-body p-0">
                         <CreateMatch/>
                     </div>
                     </div>
