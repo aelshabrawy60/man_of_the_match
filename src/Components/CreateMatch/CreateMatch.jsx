@@ -87,6 +87,13 @@ function CreateMatch() {
       console.error("Error saving match: ", error);
     }
   };
+
+  // Function to remove a player
+  const removePlayer = (uid) => {
+    setPlayers(players.filter((player) => player[0] !== uid));
+    console.log(uid);
+  };
+
   return (
     <div className="create-match-container pt-4">
       <div className="row m-0 row-gap-3 mb-4">
@@ -145,7 +152,7 @@ function CreateMatch() {
         <div className="players-title">اللاعبين</div>
         <div className="players-list">
           {players.map((player) => (
-            <PlayerCard key={player[0]} name={player[1]} photo={player[2]} />
+            <PlayerCard key={player[0]} name={player[1]} photo={player[2]} onRemove={() => removePlayer(player[0])} />
           ))}
         </div>
         <div>

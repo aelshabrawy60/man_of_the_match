@@ -5,3 +5,13 @@
     border-radius: 50%;
 }
 
+.rate-btn:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+    transition: all 0.3s ease;
+    
+}

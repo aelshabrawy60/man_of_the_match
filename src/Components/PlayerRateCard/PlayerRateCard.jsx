@@ -21,11 +21,21 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateE
   const [rateData] = useDocument(rateRef);
   const [currentRate, setCurrentRate] = useState(rate);
   const [ratesCount, setRatesCount] = useState(ratesCount_);
-
+  const [userRatedThisPlayer, setUserRatedThisPlayer] = useState(false);
   // Player reference and fetching data using `useDocument`
   const playerRef = doc(db, "players", playerId);
   const [playerData, playerLoading, playerError] = useDocument(playerRef);
 
+  useEffect(() => {
+    // Check if the user has already rated this player in this match
+    if (rateData?.exists()) {
+      const existingRates = rateData.data()?.values || [];
+      const hasRated = existingRates.some(rate => rate.senderId === user?.uid);
+      setUserRatedThisPlayer(hasRated);
+    } else {
+      setUserRatedThisPlayer(false);
+    }
+  }, [rateData, user?.uid]);
 
   // Update local state when rateData is fetched
   useEffect(() => {
@@ -129,9 +139,10 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateE
                   user.uid !== playerId ? (
                       <button
                           type="button"
-                          className="main-btn"
+                          className="main-btn rate-btn"
                           data-bs-toggle="modal"
                           data-bs-target={"#staticBackdrop" + player?.uid}
+                          disabled={userRatedThisPlayer}
                       >
                           تقييم
                       </button>
