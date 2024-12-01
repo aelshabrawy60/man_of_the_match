@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../app/firebase/clientApp';
 import { collection, query, where, orderBy } from 'firebase/firestore';
@@ -12,16 +12,13 @@ import './MatchesViewer.css';
 
 function MatchesViewer() {
   const [user] = useAuthState(auth);
-  const [filterType, setFilterType] = useState('mine'); // 'all', 'mine', 'created'
+  const [filterType, setFilterType] = useState('mine');
 
   // Create a query based on filter
-  const gamesQuery = (() => {
+  const gamesQuery = useMemo(() => {
     // If user is not authenticated and filter requires auth, default to 'all'
     if (!user && (filterType === 'mine' || filterType === 'created')) {
-      return query(
-        collection(db, 'games'),
-        orderBy('date', 'desc')
-      );
+      return query(collection(db, 'games'), orderBy('date', 'desc'));
     }
 
     switch(filterType) {
@@ -38,15 +35,12 @@ function MatchesViewer() {
           orderBy('date', 'desc')
         );
       default: // 'all'
-        return query(
-          collection(db, 'games'),
-          orderBy('date', 'desc')
-        );
+        return query(collection(db, 'games'), orderBy('date', 'desc'));
     }
-  })();
+  }, [filterType, user]);
 
   // Use the query with useCollection
-  const [matches, loading, error] = useCollection(gamesQuery);
+  const [snapshot, loading, error] = useCollection(gamesQuery);
 
   if (loading) {
     return <div className='d-flex justify-content-center align-items-center w-100' style={{height: '100vh'}}><div className="loader"></div></div>;
@@ -56,8 +50,13 @@ function MatchesViewer() {
     return <div>Error: {error.message}</div>;
   }
 
+  const matches = snapshot?.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  })) || [];
+
   return (
-    <div className='matches-viewer-container d-flex flex-column'>
+    <div className='matches-viewer-container d-flex flex-column align-items-center'>
       <div className='header w-100 text-center py-3'>
         <h2 className='m-0'>المباريات</h2>
       </div>
@@ -83,21 +82,18 @@ function MatchesViewer() {
         </button>
       </div>
 
-      <div className='row m-0 gap-3'>
-        {matches && matches.docs.length > 0 ? (
-          matches.docs.map(doc => {
-            const matchData = doc.data();
-            return (
-              <div key={doc.id} className='col-12'>
-                <MatchCard 
-                  date={matchData.date} 
-                  id={doc.id} 
-                  MOTM={matchData?.manOfTheMatch} 
-                  location={matchData.location}
-                />
-              </div>
-            );
-          })
+      <div className='row m-0 w-100 gap-3'>
+        {matches.length > 0 ? (
+          matches.map(match => (
+            <div key={match.id} className='col-12'>
+              <MatchCard 
+                date={match.date} 
+                id={match.id} 
+                MOTM={match.manOfTheMatch} 
+                location={match.location}
+              />
+            </div>
+          ))
         ) : (
           <p>لا توجد مباريات</p>
         )}
