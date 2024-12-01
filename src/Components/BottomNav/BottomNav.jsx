@@ -63,7 +63,7 @@ function BottomNav({circleSize = 50 }) {
         }
         
         <div className='d-flex justify-content-around nav-items-p'>
-            {navs_.map((nav)=> <Link className={`nav-item-p d-flex justify-content-center ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} href={nav.link}><div id={nav.link} >{nav.icon}</div></Link>)}
+            {navs_.map((nav)=> <Link className={`nav-item-p d-flex justify-content-center ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} href={nav.link}><div id={nav.link} className={`nav-icon ${nav.link == pathname ? 'selected-nav-icon': ''}`}>{nav.icon}</div></Link>)}
         </div>
     </div>
   );
