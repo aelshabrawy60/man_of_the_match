@@ -57,7 +57,7 @@ function MatchesViewer() {
   }
 
   return (
-    <div className='matches-viewer-container d-flex flex-column align-items-center'>
+    <div className='matches-viewer-container d-flex flex-column'>
       <div className='header w-100 text-center py-3'>
         <h2 className='m-0'>المباريات</h2>
       </div>
