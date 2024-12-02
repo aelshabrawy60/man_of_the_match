@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
 import {db} from '../../app/firebase/clientApp';
 import { collection, query, orderBy, where } from 'firebase/firestore';
@@ -12,7 +12,7 @@ import './MatchesViewer.css'
 
 function MatchesViewer() {
   const [user, userLoading, userError] = useAuthState(auth);
-  const [filterType, setFilterType] = useState('all');
+  const [filterType, setFilterType] = useState('mine');
   
   // Create queries based on filter type
   const baseQuery = useMemo(() => 
@@ -20,14 +20,15 @@ function MatchesViewer() {
     []
   );
   
-  const myGamesQuery = useMemo(() => 
-    user ? query(
+  const myGamesQuery = useMemo(() => {
+    if (!user || userLoading) return null;
+    
+    return query(
       collection(db, 'games'),
-      where('players', 'array-contains', user.uid),
+      where('players', 'array-contains', { uid: user.uid }),
       orderBy('date', 'desc')
-    ) : null,
-    [user]
-  );
+    );
+  }, [user, userLoading]);
 
   // Use the appropriate query based on filter type
   const [matches, loading, error] = useCollection(
