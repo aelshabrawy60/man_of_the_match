@@ -4,3 +4,82 @@
     justify-content: center;
     align-items: center;
 }
+
+.rate-input-card-container {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rate-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #fff;
+}
+
+.rate-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    min-height: 1.5rem;
+}
+
+.rate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.rate-btn-2 {
+    height: 60px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--btn-color);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.rate-btn-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.2s ease-in-out;
+}
+
+.rate-btn-2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: var(--btn-hover-color);
+}
+
+.rate-btn-2:hover::before {
+    transform: translateY(0);
+}
+
+.rate-btn-2:active {
+    transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+    .rate-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

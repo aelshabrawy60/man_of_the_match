@@ -176,7 +176,7 @@ function PlayerRateCard({ playerId, matchId , rate, ratesCount_, type = 0, rateE
           
         </div>
 
-        <div className="modal fade" id={"staticBackdrop" + player?.uid + "2"}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade p-0" id={"staticBackdrop" + player?.uid + "2"}  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <button
             ref={modalTriggerRef}
             type="button"
