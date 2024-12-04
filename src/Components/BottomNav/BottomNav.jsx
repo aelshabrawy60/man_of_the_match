@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoFootball } from "react-icons/io5";
 import { GiSoccerKick } from "react-icons/gi";
+import { MdLeaderboard } from "react-icons/md";
 
 import { RiTShirtFill } from "react-icons/ri";
 import { IoSettings } from "react-icons/io5";
@@ -30,7 +31,9 @@ function BottomNav({circleSize = 50 }) {
   let navs_ = [
     { icon: <RiTShirtFill /> , link: `/Profile/${loading ? '1' : user.uid}` },
     { icon: <GiSoccerKick /> , link: '/Matches' },
+    { icon: <MdLeaderboard />  , link: '/Leaderboards' },
     { icon: <IoSettings />  , link: '/Settings' },
+    
   ];
   
   function getXbyId(id){

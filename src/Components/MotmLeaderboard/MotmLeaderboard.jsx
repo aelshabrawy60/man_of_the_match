@@ -57,7 +57,7 @@ function MotmLeaderboard() {
             ) : players && players.length > 0 ? (
                 <div className="leaderboard-list">
                     {players.map((player, i) => (
-                        <div key={player.uid + i} className={`leaderboard-item ${i < 3 ? `top-${i + 1}` : ''}`}>
+                        <div key={i} className={`leaderboard-item ${i < 3 ? `top-${i + 1}` : ''}`}>
                             <div className="rank-badge">{i + 1}</div>
                             <PlayerCard uid={player.uid} photo={player.profilePhoto} name={player.name} onRemove={null}/>
                             <div className="motm-count">
