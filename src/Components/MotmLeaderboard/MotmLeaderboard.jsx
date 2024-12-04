@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import '../../app/loading.css'
 import PlayerCard from '../PlayerCard/PlayerCard';
 import './MotmLeaderboard.css'
+import Link from 'next/link';
+
 
 function MotmLeaderboard() {
     const [players, setPlayers] = useState([]);
@@ -28,24 +30,24 @@ function MotmLeaderboard() {
                 <h2 className='title-text mb-5'>
                     قائمة رجال المباريات
                 </h2>
-                <div className='filter-tabs'>
+                <div className='filter-tabs '>
                     <button 
                         className={`filter-tab ${choosedFilter === 'week' ? 'active' : ''}`}
                         onClick={() => setChoosedFilter('week')}
                     >
-                        هذا الاسبوع
+                        اسبوعي
                     </button>
                     <button 
                         className={`filter-tab ${choosedFilter === 'month' ? 'active' : ''}`}
                         onClick={() => setChoosedFilter('month')}
                     >
-                        هذا الشهر
+                        شهري
                     </button>
                     <button 
                         className={`filter-tab ${choosedFilter === 'year' ? 'active' : ''}`}
                         onClick={() => setChoosedFilter('year')}
                     >
-                        هذه السنة
+                        سنوي
                     </button>
                 </div>
             </div>
@@ -57,14 +59,16 @@ function MotmLeaderboard() {
             ) : players && players.length > 0 ? (
                 <div className="leaderboard-list">
                     {players.map((player, i) => (
-                        <div key={i} className={`leaderboard-item ${i < 3 ? `top-${i + 1}` : ''}`}>
-                            <div className="rank-badge">{i + 1}</div>
-                            <PlayerCard uid={player.uid} photo={player.profilePhoto} name={player.name} onRemove={null}/>
-                            <div className="motm-count">
-                                <span className="count-number">{player.count}</span>
-                                <span className="count-label">مرة</span>
+                        <Link href={`/Profile/${player.playerId}`} key={i}>
+                            <div className={`leaderboard-item ${i < 3 ? `top-${i + 1}` : ''}`}>
+                                <div className="rank-badge">{i + 1}</div>
+                                <PlayerCard uid={player.playerId} photo={player.profilePhoto} name={player.name} onRemove={null}/>
+                                <div className="motm-count">
+                                    <span className="count-number">{player.count}</span>
+                                    <span className="count-label">مرة</span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             ) : (

@@ -18,6 +18,7 @@ import PlayerRateCardsViewer from "@/Components/PlayersRateCardsViewer/PlayerRat
 import { getFullDate, getTime } from "@/app/functions/dateF";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
+import Warning from "@/Components/Warning/Warning";
 
 
 
@@ -45,6 +46,7 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
+        <Warning text={"جائزة بقيمة 2000 جنية للرجل الشهر بدءا من 1/1/2025"}/>
         <div className='header w-100 text-center py-4'>
         <h2 className='m-0'>
         تفاصيل المباراة</h2>

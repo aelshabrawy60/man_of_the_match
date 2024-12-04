@@ -1,6 +1,7 @@
 "use client"
 import CreateMatch from "@/Components/CreateMatch/CreateMatch";
 import MatchesViewer from "@/Components/MatchesViewer/MatchesViewer";
+import PrizeAd from "@/Components/PrizeAd/PrizeAd";
 import TriggerApiInBackground from "@/Components/triggerServerClosingVotesCheck";
 import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
@@ -11,6 +12,7 @@ export default function Matches(){
     return(
         <>  
             <div>
+                <PrizeAd/>
                 <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     <IoAddSharp />
                 </button>

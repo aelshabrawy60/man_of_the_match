@@ -1,0 +1,129 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+}
+
+.prizeCard {
+    background: rgba(255, 255, 255, 0.059);
+    padding: 2rem 1rem;
+    backdrop-filter: blur(10px);
+    max-width: 800px;
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+    color: var(--foreground);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.prizeBox {
+    background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    margin: 2rem 0;
+    color: white;
+}
+
+.prizeAmount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.currency {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.amount {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+    color: white;
+}
+
+.rulesSection {
+    margin: 2rem 0;
+    background: rgba(255, 255, 255, 0.059);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.123);
+}
+
+.rulesSection h3 {
+    color: var(--main-color);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.rulesSection ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rulesSection li {
+    margin: 1rem 0;
+    color: var(--foreground);
+    position: relative;
+    padding-right: 1.5rem;
+    line-height: 1.6;
+}
+
+.rulesSection li:before {
+    content: "•";
+    color: var(--main-color);
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+}
+
+.note {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    background: rgba(0, 133, 62, 0.1);
+    border-radius: 8px;
+    border-right: 4px solid var(--main-color);
+}
+
+.note p {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.leaderboardLink {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.leaderboardLink:hover {
+    opacity: 0.9;
+}

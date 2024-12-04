@@ -27,10 +27,10 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     margin: 0 auto;
-    max-width: fit-content;
 }
 
 .filter-tab {
+    flex: 1;
     background: none;
     border: none;
     color: #a3a3a3;
@@ -70,11 +70,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.leaderboard-item:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-}
+
 
 .rank-badge {
     position: absolute;

@@ -1,0 +1,63 @@
+.adContainer {
+    background: linear-gradient(135deg, rgba(0,133,48,0.1) 0%, rgba(0,133,48,0.2) 100%);
+    border: 1px solid rgba(0,133,48,0.3);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 1rem;
+    backdrop-filter: blur(8px);
+    direction: rtl;
+    transition: transform 0.2s ease;
+}
+
+.adContainer:hover {
+    transform: translateY(-2px);
+}
+
+.prizeInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.prizeAmount {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    color: var(--main-color);
+}
+
+.amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.currency {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.prizeText {
+    font-size: 0.9rem;
+    color: var(--foreground);
+    opacity: 0.9;
+}
+
+.rulesButton {
+    background: var(--main-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.rulesButton:hover {
+    opacity: 0.9;
+}
