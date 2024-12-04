@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-const CountdownTimer = ({ endDate }) => {
+const CountdownTimer = ({ endDate , disableRating}) => {
   // Function to calculate remaining time
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
     const difference = endDate - now;
 
     if (difference <= 0) {
-      return { hours: 0, minutes: 0, seconds: 0 }; // Timer reached zero
+      disableRating()
+      return { hours: -1, minutes: -1, seconds: -1 }; // Timer reached zero
     }
 
     const hours = Math.floor(difference / (1000 * 60 * 60));
@@ -37,7 +38,7 @@ const CountdownTimer = ({ endDate }) => {
           <span>{timeLeft.seconds.toString().padStart(2, '0')}</span>
         </div>
       ) : (
-        <div>Time's up!</div>
+        <div>انتهي التقييم</div>
       )}
     </div>
   );

@@ -1,11 +1,38 @@
 import { doc, updateDoc, increment, arrayUnion } from "firebase/firestore";
 import {db} from '../firebase/clientApp'
 
+const minPlayers = 10;
+const minRatings = 6;
+
+
+function validateMatchRules(sortedPlayers){
+    // Check if there are more than 10 players in the sorted array
+    if (sortedPlayers.length > minPlayers) {
+        return false;
+    }
+
+    // Check if each player has at least 6 ratings
+    for (const { ratesCount } of sortedPlayers) {
+        if (ratesCount < minRatings) {
+            return false;
+        }    
+    }
+
+    return true
+}
+
+
+
 async function closeVotes(matchId, sortedPlayers) {
     console.log("Closing votes for match:", matchId);
 
     // Reference to the game document
     const gameDocRef = doc(db, "games", matchId);
+
+    if(validateMatchRules(sortedPlayers) == false){
+        console.log("Match rules not met");
+        return;
+    }
 
     try {
         // Update the game document to close votes and set man of the match

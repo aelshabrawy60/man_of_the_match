@@ -6,8 +6,6 @@ import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 
 
-
-
 export default function Matches(){
 
     return(

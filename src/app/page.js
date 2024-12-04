@@ -6,6 +6,7 @@ import Link from "next/link";
 import EditPlayerPhoto from "@/Components/EditPlayerPhoto/EditPlayerPhoto";
 import EditPlayerProfile from "@/Components/EditPlayerProfile/EditPlayerProfile";
 import BottomNav from "@/Components/BottomNav/BottomNav";
+import MotmLeaderboard from "@/Components/MotmLeaderboard/MotmLeaderboard";
 
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <p>Email: {user.email}</p>
         <p>UID: {user.uid}</p>
         {user.photoURL && <img src={user.photoURL} alt="User Avatar" />}
+        <MotmLeaderboard/>
       </div>
     );
   }

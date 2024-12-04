@@ -21,7 +21,7 @@ function PlayerRateCardsViewer({ matchId }) {
       const gameData = gameDoc.data();
       const players = gameData?.players || [];
 
-      if((gameData.closedVotes == false && (gameData.date.toDate() < new Date())) && isUserInMatch()){
+      if((gameData.closedVotes == false && (gameData.date.toDate() < new Date())) && isUserInMatch() && gameData.endDate.toDate() > new Date()){
           setRateEnabeld(true)
       }else{
         setRateEnabeld(false)
@@ -150,6 +150,9 @@ function PlayerRateCardsViewer({ matchId }) {
   }
 
 
+  function disableRating(){
+    setRateEnabeld(false)
+  }
 
   return (
     <div className="w-100">
@@ -163,7 +166,7 @@ function PlayerRateCardsViewer({ matchId }) {
       {calcRemaningTimeToCloseVotes(gameDoc.data().endDate, gameDoc.data().date.toDate()) != null ?
           <div className="d-flex gray-text gap-2 justify-content-center mb-4">
             <div>ينتهي التقييم بعد</div>
-            <div><Timer endDate={calcRemaningTimeToCloseVotes(gameDoc.data().endDate, gameDoc.data().date.toDate())}/></div>
+            <div><Timer endDate={calcRemaningTimeToCloseVotes(gameDoc.data().endDate, gameDoc.data().date.toDate())} disableRating={disableRating}/></div>
           </div>
       :
           <div className="d-flex gap-2 justify-content-center mb-2">
