@@ -14,4 +14,6 @@
     right: 0; /* Position the badge on the right side */
     bottom: 0; /* Position the badge at the bottom */
 }
-  
+.badge img{
+    border: none;
+}

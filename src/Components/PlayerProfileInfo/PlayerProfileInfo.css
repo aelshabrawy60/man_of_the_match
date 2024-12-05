@@ -1,6 +1,69 @@
-.profile-photo-container img{
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
+.player-profile-container {
+    width: 100%;
+}
+
+.profile-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-photo-wrapper img {
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.profile-photo-wrapper img:hover {
+    transform: scale(1.05);
+}
+
+
+.player-name {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rating-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.star-icon {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.rating-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.rating-count {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .profile-content-wrapper {
+        gap: 1.3rem;
+    }
+
+    .player-name {
+        font-size: 1.5rem;
+    }
+
 }

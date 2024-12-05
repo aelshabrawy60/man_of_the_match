@@ -37,21 +37,26 @@ function PlayerStats({ games, playerId }) {
   }, [games, playerId]);
 
   return (
-    <div className='d-flex player-stats-container justify-content-around gradient-btn p-2'>
-        <div>
-            <div className='mb-2'>المشاركات</div>
-            <div className='d-flex fs-3 justify-content-center gap-2 align-items-center'>
-                <IoFootball className='fs-2'/><div>{games?.length}</div>
-            </div>
+    <div className='player-stats-container'>
+      <div className='stat-box'>
+        <div className='stat-label'>المشاركات</div>
+        <div className='stat-value'>
+          <div className='stat-icon'>
+            <IoFootball />
+          </div>
+          <div>{games?.length}</div>
         </div>
-        
-        <div className='text-center'>
-            <div className='mb-2'>رجل المباراة</div>
-            <div className='d-flex fs-3 gap-2 justify-content-center align-items-center'>
-                <FaMedal />
-                <div>{manOfTheMatchGames.length}</div> {/* Display the number of man of the match games */}
-            </div>
+      </div>
+      
+      <div className='stat-box'>
+        <div className='stat-label'>رجل المباراة</div>
+        <div className='stat-value'>
+          <div className='stat-icon'>
+            <FaMedal />
+          </div>
+          <div>{manOfTheMatchGames.length}</div>
         </div>
+      </div>
     </div>
   );
 }
