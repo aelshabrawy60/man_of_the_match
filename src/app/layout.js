@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <meta name="galaksion-domain-verification" content="a8c49707537b014ac13878fea4aad56db27ff44f2262fe733344f7bebe4dc5d4" />
       <body className={changa.className}>
         {/* Google Analytics gtag.js */}
         <script
