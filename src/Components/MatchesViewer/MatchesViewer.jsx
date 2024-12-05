@@ -8,6 +8,7 @@ import MatchCard from '../MatchCard/MatchCard';
 import { GiSoccerBall } from "react-icons/gi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
+import { IoAddSharp } from "react-icons/io5";
 import './MatchesViewer.css'
 
 function MatchesViewer() {
@@ -67,26 +68,32 @@ function MatchesViewer() {
 
   return (
     <div className='matches-viewer-container d-flex flex-column align-items-center'>
-      <div className='header w-100 text-center py-3 mb-1'>
+      <div className='header w-100 text-center py-3 px-3 mb-1 d-flex justify-content-center justify-content-md-between'>
         <h2 className='m-0'>المباريات</h2>
+        <div>
+          <button type="button" style={{width: '170px'}} className="py-2 px-4 add-match-btn-2 d-none d-md-flex" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <IoAddSharp className='fs-4 ms-2'/> انشاء مباراة
+          </button>
+        </div>
       </div>
       
       {/* Filter buttons */}
-      <div className='filter-container mt-3 mb-3'>
-        <button 
-          className={`filter-btn ${filterType === 'mine' ? 'active' : ''}`} 
-          onClick={() => handleFilterChange('mine')}
-          disabled={!user}
-        >
-          مشاركاتي
-        </button>
-        <button 
-          className={`filter-btn ${filterType === 'all' ? 'active' : ''}`} 
-          onClick={() => handleFilterChange('all')}
-        >
-          الكل
-        </button>
-      </div>
+      
+        <div className='filter-container mt-3 mb-3'>  
+          <button 
+            className={`filter-btn ${filterType === 'mine' ? 'active' : ''}`} 
+            onClick={() => handleFilterChange('mine')}
+            disabled={!user}
+          >
+            مشاركاتي
+          </button>
+          <button 
+            className={`filter-btn ${filterType === 'all' ? 'active' : ''}`} 
+            onClick={() => handleFilterChange('all')}
+          >
+            الكل
+          </button>
+        </div>
 
       <div className='row m-0 w-100 gap-3'>
         {isLoading ? (

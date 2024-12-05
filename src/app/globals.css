@@ -27,7 +27,7 @@ a {
 .add-match-btn{
   position: fixed;
   color: white;
-  background-color: var(--main-color);
+  background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
   font-size: 25px;
   display: flex;
   justify-content: center;
@@ -38,7 +38,16 @@ a {
   right: 5%;
   z-index: 999;
 }
-
+.add-match-btn-2{
+  color: white;
+  background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+}
 .modal-content{
   background-color: var(--background);
 }

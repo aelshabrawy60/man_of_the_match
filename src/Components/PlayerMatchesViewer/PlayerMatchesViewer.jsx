@@ -20,7 +20,7 @@ function PlayerMatchesViewer({gamesIds}) {
         <h2 className='m-0'>
         المباريات </h2>
         </div>
-        <div className='row m-0 gap-3'>
+        <div className='row m-0 gap-3 w-100'>
         {documents && documents.length > 0 ? (
             documents.map(doc => {
             return (

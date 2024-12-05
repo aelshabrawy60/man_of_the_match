@@ -6,7 +6,7 @@ export function middleware(req) {
 
   // Allow public assets like static files and images
   const PUBLIC_FILE = /\.(.*)$/;
-  const ALLOWED_PATHS = ["/Auth", "/_next", "/favicon.ico", "/images", "/public"];
+  const ALLOWED_PATHS = ["/Auth", "/Prize_rules", "/Leaderboards", "/_next", "/favicon.ico", "/images", "/public", "/api/MOTM_Leaderboard"];
 
   // Skip middleware for static files or paths explicitly allowed
   if (PUBLIC_FILE.test(url.pathname) || ALLOWED_PATHS.some(path => url.pathname.startsWith(path))) {

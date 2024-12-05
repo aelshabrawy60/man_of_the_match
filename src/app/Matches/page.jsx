@@ -13,7 +13,8 @@ export default function Matches(){
         <>  
             <div>
                 <PrizeAd/>
-                <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                
+                <button type="button" className="p-3 add-match-btn d-flex d-md-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     <IoAddSharp />
                 </button>
                 <TriggerApiInBackground/>

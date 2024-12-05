@@ -40,28 +40,26 @@ export default function ProfilePage() {
             {/* Hero section with background and profile info */}
             <div className="profile-hero-section">
                 {profileId == user.uid && <div className="coins-display-wrapper mb-4 px-3"><CoinsDisplay/></div>}
-                <div className="container py-2 pt-4">
-                    <PlayerProfileInfo 
-                        playerId={player?.uid} 
-                        name={player?.name} 
-                        photo={player?.profilePhoto} 
-                        rate={(player?.ratesSum/ player?.ratesCount).toFixed(2)} 
-                        ratesCount={player?.ratesCount}
-                    />
-                </div>
-                <div className="stats-card px-3">
-                    <PlayerStats games={player?.games} playerId={player.uid}/>
+                <div className="row m-0 align-items-center">
+                    <div className="container py-2 col-12 col-lg-6">
+                        <PlayerProfileInfo 
+                            playerId={player?.uid} 
+                            name={player?.name} 
+                            photo={player?.profilePhoto} 
+                            rate={(player?.ratesSum/ player?.ratesCount).toFixed(2)} 
+                            ratesCount={player?.ratesCount}
+                        />
+                    </div>
+                    <div className="stats-card px-3 col-12 col-lg-6">
+                        <PlayerStats games={player?.games} playerId={player.uid}/>
+                    </div>
                 </div>
             </div>
 
             {/* Stats and matches section */}
             <div className="container profile-content py-4">
-                <div className="row g-4">
-                    <div className="col-12">
-                        <div className="matches-card">
-                            <PlayerMatchesViewer gamesIds={player?.games}/>
-                        </div>
-                    </div>
+                <div className="matches-card p-0">
+                    <PlayerMatchesViewer gamesIds={player?.games}/>
                 </div>
             </div>
         </div>

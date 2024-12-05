@@ -26,8 +26,8 @@ function BottomNav({circleSize = 50 }) {
   if (pathname == '/Auth' ) return null;
   if (loading) return <div></div>;
   if (error) return <p>Error: {error.message}</p>;
-
-
+  if (!user) return null;
+// console.log(user)
   let navs_ = [
     { icon: <RiTShirtFill /> , link: `/Profile/${loading ? '1' : user.uid}` },
     { icon: <GiSoccerKick /> , link: '/Matches' },
@@ -54,7 +54,7 @@ function BottomNav({circleSize = 50 }) {
   }
   
   return (
-    <div className='p-3 nav-bottom-container'>
+    <div className='p-3 nav-bottom-container d-lg-none'>
         {isCurrentPathInNavs() ? 
           <div ref={indicatorRef} className='nav-indicator p-2'>
           <div className='inner-circ gradient-btn' id='indicatorB' >

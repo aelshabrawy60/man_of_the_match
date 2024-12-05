@@ -8,7 +8,7 @@ const TriggerApiInBackground = () => {
   const callApiInBackground = async () => {
     try {
       // Call the API without waiting for the response
-      fetch('http://localhost:3000/api/CheckAndCloseVotesPlayerMatches', {
+      fetch('/api/CheckAndCloseVotesPlayerMatches', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
