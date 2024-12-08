@@ -35,7 +35,7 @@ export default function ProfilePage() {
         return <div>Error: {error.message}</div>;
     }
     
-    if(!user && !loading){
+    if(!user && !loading && profileId == 1){
         return (
             <div className="d-flex justify-content-center align-items-center p-3" style={{height: '100vh'}}>
                 <SignInAd/>
@@ -48,7 +48,7 @@ export default function ProfilePage() {
             
             {/* Hero section with background and profile info */}
             <div className="profile-hero-section">
-                {profileId == user.uid && <div className="coins-display-wrapper mb-4 px-3"><CoinsDisplay/></div>}
+                {profileId == user?.uid && <div className="coins-display-wrapper mb-4 px-3"><CoinsDisplay/></div>}
                 <div className="row m-0 align-items-center">
                     <div className="container py-2 col-12 col-lg-6">
                         <PlayerProfileInfo 
