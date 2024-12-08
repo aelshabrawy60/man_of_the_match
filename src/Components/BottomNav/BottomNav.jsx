@@ -26,10 +26,10 @@ function BottomNav({circleSize = 50 }) {
   if (pathname == '/Auth' ) return null;
   if (loading) return <div></div>;
   if (error) return <p>Error: {error.message}</p>;
-  if (!user) return null;
+
 // console.log(user)
   let navs_ = [
-    { icon: <RiTShirtFill /> , link: `/Profile/${loading ? '1' : user.uid}` },
+    { icon: <RiTShirtFill /> , link: `/Profile/${loading || !user ? '1' : user.uid}` },
     { icon: <GiSoccerKick /> , link: '/Matches' },
     { icon: <MdLeaderboard />  , link: '/Leaderboards' },
     { icon: <IoSettings />  , link: '/Settings' },

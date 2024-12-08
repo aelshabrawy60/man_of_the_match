@@ -5,9 +5,13 @@ import PrizeAd from "@/Components/PrizeAd/PrizeAd";
 import TriggerApiInBackground from "@/Components/triggerServerClosingVotesCheck";
 import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
-
+import Cookies from 'js-cookie';
+import SignInAd from "@/Components/SignInAd/SignInAd";
 
 export default function Matches(){
+    
+    const authToken = Cookies.get("authToken");
+    const authenticated = !!authToken;
 
     return(
         <>  
@@ -18,7 +22,7 @@ export default function Matches(){
                     <IoAddSharp />
                 </button>
                 <TriggerApiInBackground/>
-                <MatchesViewer />
+                <MatchesViewer authenticated={authenticated}/>
                 
 
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -29,7 +33,8 @@ export default function Matches(){
                         <button type="button" className="close-button fs-4" data-bs-dismiss="modal" aria-label="Close"><MdClose /></button>
                     </div>
                     <div className="modal-body">
-                        <CreateMatch/>
+                        {authenticated ? <CreateMatch/> : <SignInAd title="سجل دخول لأنشاء مباراة"/>}
+                        
                     </div>
                     </div>
                 </div>

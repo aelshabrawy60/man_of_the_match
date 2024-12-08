@@ -23,10 +23,10 @@ export function middleware(req) {
   }
 
   // Redirect unauthenticated users
-  if (!authToken && url.pathname !== "/Auth") {
-    url.pathname = "/Auth";
-    return NextResponse.redirect(url);
-  }
+  //if (!authToken && url.pathname !== "/Auth") {
+  //  url.pathname = "/Auth";
+  //  return NextResponse.redirect(url);
+  //}
 
   return NextResponse.next();
 }

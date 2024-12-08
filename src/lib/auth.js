@@ -1,6 +1,9 @@
 import admin from './firebase-admin';
 
+
+
 export async function authenticateUser(req) {
+
   try {
     // Get token from cookie
     const authToken = req.cookies.get('authToken')?.value;

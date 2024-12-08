@@ -22,11 +22,6 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <meta name='admaven-placement' content="Bqdn9pdU6"></meta>
-      <meta name="galaksion-domain-verification" content="a8c49707537b014ac13878fea4aad56db27ff44f2262fe733344f7bebe4dc5d4" />
-      <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1127217"></script>
-      <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1127223"></script>
-      <script data-cfasync="false" src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1127233"></script>
       <body className={changa.className}>
         {/* Google Analytics gtag.js */}
         <script

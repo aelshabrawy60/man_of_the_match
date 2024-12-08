@@ -14,6 +14,7 @@ import CoinsDisplay from "@/Components/Coins/CoinsDisplay";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp" // Import the useRouter hook
+import SignInAd from "@/Components/SignInAd/SignInAd";
 
 
 export default function ProfilePage() {
@@ -32,6 +33,14 @@ export default function ProfilePage() {
     
     if (playerError || error) {
         return <div>Error: {error.message}</div>;
+    }
+    
+    if(!user && !loading){
+        return (
+            <div className="d-flex justify-content-center align-items-center p-3" style={{height: '100vh'}}>
+                <SignInAd/>
+            </div>
+        );
     }
     return(
         <div className="profile-page-container">

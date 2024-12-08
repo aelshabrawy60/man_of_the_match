@@ -16,9 +16,9 @@ function Sidebar() {
   if (pathname == '/Auth') return null;
   if (loading) return <div></div>;
   if (error) return <p>Error: {error.message}</p>;
-  if (!user) return null;
+
   const navs_ = [
-    { icon: <RiTShirtFill />, link: `/Profile/${loading ? '1' : user.uid}`, label: 'الملف الشخصي' },
+    { icon: <RiTShirtFill />, link: `/Profile/${loading || !user ? '1' : user.uid}`, label: 'الملف الشخصي' },
     { icon: <GiSoccerKick />, link: '/Matches', label: 'المباريات' },
     { icon: <MdLeaderboard />, link: '/Leaderboards', label: 'الترتيب' },
     { icon: <IoSettings />, link: '/Settings', label: 'الاعدادات' },

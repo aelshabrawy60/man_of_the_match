@@ -33,7 +33,7 @@ function MotmLeaderboard() {
     return (
         <>
             
-            <div className='leaderboard-container'>
+            <div className='leaderboard-container mb-3'>
                 <div className='header w-100 text-center py-3'>
                     
                     <h2 className='title-text mb-5'>

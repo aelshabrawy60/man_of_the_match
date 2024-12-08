@@ -16,6 +16,7 @@ function EditMatch({ gameId }) {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [isEditable, setIsEditable] = useState(true); // Flag to track if match can still be edited
+  const [matchDate_, setMatchDate_] = useState(null);
 
   // Fetch match data based on gameId
   useEffect(() => {
@@ -43,11 +44,9 @@ function EditMatch({ gameId }) {
           setLocation(matchData.location);
 
           // Check if the match time has passed
-          const matchDate = matchData.date.toDate();
-          const currentTime = new Date();
-          if (currentTime > matchDate) {
-            setIsEditable(false); // Disable editing if the match has started
-          }
+          setMatchDate_(matchData.date.toDate());
+          console.log(matchDate_)
+          checkIfMatchStarted(matchData.date.toDate());
         } else {
           console.error("Match not found!");
         }
@@ -76,6 +75,7 @@ function EditMatch({ gameId }) {
 
   // Function to update the match
   const updateMatch = async () => {
+    
     try {
       if (!isEditable) {
         console.log("Match cannot be edited after it starts.");
@@ -85,7 +85,7 @@ function EditMatch({ gameId }) {
         });
         return;
       }
-
+      checkIfMatchStarted(matchDate_)
       // Ensure the date and time are valid
       if (!day || !time || !location) {
         console.error("All fields must be filled in!");
@@ -119,7 +119,6 @@ function EditMatch({ gameId }) {
   };
 
   // Function to add a player
-  // Function to add a player
   const addPlayer = (uid, name, profilePhoto) => {
     const playerExists = players.some((player) => player.uid === uid);
     if (!playerExists) {
@@ -129,12 +128,24 @@ function EditMatch({ gameId }) {
 
   // Function to remove a player
   const removePlayer = (uid) => {
-    setPlayers(players.filter((player) => player.uid !== uid));
+    checkIfMatchStarted(matchDate_)
+    if(isEditable){
+      setPlayers(players.filter((player) => player.uid !== uid));
+    }
   };
+
+  const checkIfMatchStarted = (matchDaten) => {
+    const matchDate = matchDaten;
+    const currentTime = new Date();
+    if (currentTime > matchDate) {
+      setIsEditable(false); // Disable editing if the match has started
+    }
+  }
 
   return (
     <div className="edit-match-container">
-      <div className="row m-0 row-gap-3 mb-4">
+      {isEditable ? (
+        <div className="row m-0 row-gap-3 mb-4">
         <div className="d-flex flex-column col-6 gap-2">
           <label className="create-match-label">اليوم</label>
           <div className="position-relative">
@@ -183,12 +194,14 @@ function EditMatch({ gameId }) {
           />
         </div>
       </div>
+      ) : null}
+      
 
       <div className="players p-3">
         <div className="fs-5 mb-3">اللاعبين</div>
         
         {players.map((player) => (
-          <PlayerCard key={player.uid} name={player.name} photo={player.profilePhoto} onRemove={() => removePlayer(player.uid)}/>
+          <PlayerCard key={player.uid} name={player.name} photo={player.profilePhoto} onRemove={isEditable? () => removePlayer(player.uid) : null}/>
         ))}
         <div>
           <div className="dropdown mt-4">
@@ -209,7 +222,7 @@ function EditMatch({ gameId }) {
         </div>
       </div>
 
-      <div className="mt-5 px-3">
+      <div className="mt-3 px-3">
         <button
           className="main-btn w-100 save-match-btn gradient-btn"
           onClick={updateMatch}

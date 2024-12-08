@@ -19,6 +19,8 @@ import { getFullDate, getTime } from "@/app/functions/dateF";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
 import Warning from "@/Components/Warning/Warning";
+import Cookies from 'js-cookie';
+import SignInAd from "@/Components/SignInAd/SignInAd";
 
 
 
@@ -28,6 +30,8 @@ export default function MatchPage() {
   const { matchId } = params; // Extract matchId from URL
   const [user, loading_, error_] = useAuthState(auth);
 
+  const authToken = Cookies.get("authToken");
+  const authenticated = !!authToken;
   // Firestore reference to the specific game document
   const gameRef = doc(db, "games", matchId);
 
@@ -46,7 +50,6 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
-        <Warning text={"جائزة بقيمة 2000 جنية للرجل الشهر بدءا من 1/1/2025"}/>
         <div className='header w-100 text-center py-4'>
         <h2 className='m-0'>
         تفاصيل المباراة</h2>
@@ -59,9 +62,16 @@ export default function MatchPage() {
             <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
           </div>
         </div>
+        {!authenticated ? 
+          <div className="p-2">
+              <SignInAd title="هل انت مشارك في هذه المباراة" message="سجل الدخول لكي تسطيع تقييم اللاعبين"/>
+          </div>
+          :
+          null
+        }
         <PlayerRateCardsViewer matchId={matchId}/>
           {
-            gameData.creator == user.uid ?
+            authenticated && gameData.creator == user.uid ?
             <>
             <button type="button" className="p-3 add-match-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
               <MdEdit />

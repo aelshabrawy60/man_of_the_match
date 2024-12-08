@@ -10,10 +10,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
 import { IoAddSharp } from "react-icons/io5";
 import './MatchesViewer.css'
+import SignInAd from '../SignInAd/SignInAd';
 
-function MatchesViewer() {
+function MatchesViewer({authenticated}) {
   const [user, userLoading, userError] = useAuthState(auth);
-  const [filterType, setFilterType] = useState('mine');
+  const [filterType, setFilterType] = useState(authenticated ? 'mine' : 'all');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prevMatches, setPrevMatches] = useState(null);
   
@@ -24,7 +25,7 @@ function MatchesViewer() {
   );
   
   const myGamesQuery = useMemo(() => {
-    if (!user || userLoading) return null;
+    if (!authenticated) return null;
     
     return query(
       collection(db, 'games'),
@@ -35,7 +36,7 @@ function MatchesViewer() {
 
   // Use the appropriate query based on filter type
   const [matches, loading, error] = useCollection(
-    filterType === 'all' ? baseQuery : (myGamesQuery || baseQuery)
+    filterType === 'all' ? baseQuery :(myGamesQuery || baseQuery)
   );
 
   // Store previous matches while transitioning
@@ -47,9 +48,11 @@ function MatchesViewer() {
 
   // Handle filter changes with transition state
   const handleFilterChange = (newFilter) => {
+    console.log(newFilter)
     if (newFilter === filterType) return;
     setIsTransitioning(true);
     setFilterType(newFilter);
+    
     // Use a longer transition for a smoother effect
     setTimeout(() => setIsTransitioning(false), 300);
   };
@@ -58,7 +61,7 @@ function MatchesViewer() {
   // 1. Initial user loading
   // 2. Query is loading without previous matches
   // 3. Filter transition without previous matches
-  const isLoading = (loading && !prevMatches) || userLoading || (filterType === 'mine' && !user);
+  const isLoading = (loading && !prevMatches) || userLoading;
 
   if (error || userError) {
     return <div>Error: {error?.message || userError?.message}</div>;
@@ -83,7 +86,6 @@ function MatchesViewer() {
           <button 
             className={`filter-btn ${filterType === 'mine' ? 'active' : ''}`} 
             onClick={() => handleFilterChange('mine')}
-            disabled={!user}
           >
             مشاركاتي
           </button>
@@ -113,6 +115,9 @@ function MatchesViewer() {
               </div>
             </div>
           ))
+          // if not authenticated show Sign in to view matches
+        ) : !authenticated && filterType == 'mine' ? (
+          <div className='p-3 py-2'><SignInAd/></div>
         ) : displayMatches?.docs?.length > 0 ? (
           displayMatches.docs.map(doc => {
             const matchData = doc.data();

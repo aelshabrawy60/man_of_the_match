@@ -3,7 +3,7 @@ import Link from 'next/link';
 import './SignInAd.css';
 import { FaTrophy, FaGamepad } from 'react-icons/fa';
 
-function SignInAd() {
+function SignInAd({title = "سجل دخولك للمشاركة!", message = "العب مباريات واحصل على جوائز"}) {
     return (
         <div className="signin-ad">
             <div className="signin-ad-content">
@@ -11,8 +11,8 @@ function SignInAd() {
                     <FaGamepad className="feature-icon" />
                     <FaTrophy className="feature-icon" />
                 </div>
-                <h3>سجل دخولك للمشاركة!</h3>
-                <p>العب مباريات واحصل على جوائز</p>
+                <h3>{title}</h3>
+                <p>{message}</p>
                 <div className="cta-container">
                     <Link href="/Auth" className="signin-button">
                         تسجيل الدخول
