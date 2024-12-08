@@ -22,6 +22,8 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6977923343312127"
+     crossorigin="anonymous"></script>
       <body className={changa.className}>
         {/* Google Analytics gtag.js */}
         <script
