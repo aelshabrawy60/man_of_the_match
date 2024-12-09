@@ -21,6 +21,7 @@ import { auth } from "../../app/firebase/clientApp";
 import Warning from "@/Components/Warning/Warning";
 import Cookies from 'js-cookie';
 import SignInAd from "@/Components/SignInAd/SignInAd";
+import Share from "@/Components/Share/Share";
 
 
 
@@ -50,9 +51,11 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
-        <div className='header w-100 text-center py-4'>
-        <h2 className='m-0'>
-        تفاصيل المباراة</h2>
+        <div className='header w-100 d-flex justify-content-between align-items-center p-3'>
+          <h2 className='m-0'>
+          تفاصيل المباراة
+          </h2>
+          <Share link={window.location.href}/>
         </div>
         <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '260px'}}>
           <img src="field.svg" className="field"></img>

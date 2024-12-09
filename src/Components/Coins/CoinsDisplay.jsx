@@ -10,6 +10,7 @@ const CoinsDisplay = () => {
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [tokenReady, setTokenReady] = useState(false); // Track if token is ready
 
   // Function to refresh the token
   const refreshIdToken = async () => {
@@ -26,17 +27,19 @@ const CoinsDisplay = () => {
       });
       // Update the last refresh time in localStorage
       localStorage.setItem('lastTokenRefresh', Date.now().toString());
+      setTokenReady(true); // Mark token as ready
     }
   };
 
   useEffect(() => {
-    // Get the last token refresh time from localStorage
     const lastTokenRefresh = localStorage.getItem('lastTokenRefresh');
     const currentTime = Date.now();
 
     // If no refresh time is found, or it's been more than 55 minutes since the last refresh
     if (!lastTokenRefresh || currentTime - Number(lastTokenRefresh) > 55 * 60 * 1000) {
       refreshIdToken(); // Refresh the token immediately
+    } else {
+      setTokenReady(true); // Token is already valid
     }
 
     // Set interval for token refresh (every 55 minutes)
@@ -47,6 +50,8 @@ const CoinsDisplay = () => {
   }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
+    if (!tokenReady) return; // Wait for token to be ready
+
     const fetchCoins = async () => {
       try {
         const response = await fetch('/api/coins');
@@ -63,7 +68,7 @@ const CoinsDisplay = () => {
     };
 
     fetchCoins();
-  }, []); // Only fetch coins once on mount
+  }, [tokenReady]); // Fetch coins only after the token is ready
 
   const handleAddCoins = async () => {
     try {

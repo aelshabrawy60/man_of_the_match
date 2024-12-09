@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import './SignInAd.css';
 import { FaTrophy, FaGamepad } from 'react-icons/fa';

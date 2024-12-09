@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { db } from "../../app/firebase/clientApp"; // Import your Firestore instance
-import { collection, addDoc , Timestamp} from "firebase/firestore"; // For adding data to Firestore
-import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique IDs
+import { db } from "../../app/firebase/clientApp"; 
+import { collection, addDoc , Timestamp} from "firebase/firestore"; 
 import PlayerDropdown from "../PlayersDropdown/PlayerDropdown";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { IoAddSharp } from "react-icons/io5";
@@ -13,8 +12,6 @@ import { IoTimeOutline } from "react-icons/io5";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
 import './CreateMatch.css'
-import EditMatch from "../EditMatch/EditMatch";
-import closeVotes from "@/app/functions/closeVotes";
 
 function CreateMatch() {
   const [user, loading_, error_] = useAuthState(auth);
