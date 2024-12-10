@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoFootball } from "react-icons/io5";
 import { FaMedal } from "react-icons/fa";
 import { collection, query, where, getDocs } from "firebase/firestore";

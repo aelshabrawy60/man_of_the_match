@@ -51,18 +51,20 @@ export default function MatchPage() {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
       <div className="d-flex flex-column align-items-center">
-        <div className='header w-100 d-flex justify-content-between align-items-center p-3'>
-          <h2 className='m-0'>
+        <div className='w-100 d-flex m-0 justify-content-between align-items-center p-3'>
+          <h3 className='m-0'>
           تفاصيل المباراة
-          </h2>
-          <Share link={window.location.href}/>
+          </h3>
+          <Share link={window.location.href}/> 
         </div>
-        <div className="d-flex w-100 justify-content-center align-items-center" style={{position: 'relative', height: '260px'}}>
-          <img src="field.svg" className="field"></img>
-          <div className="d-flex flex-column align-items-center gap-3" style={{position: 'relative', zIndex: '99'}}>
+        <div className="d-flex flex-column w-100 justify-content-center align-items-center gap-5" style={{position: 'relative', height: '260px'}}>
+          <img src="field.jpg" className="field"></img>
+          <div className="d-flex align-items-center gap-5" style={{position: 'relative', zIndex: '99'}}>
             <div className="d-flex fs-5 align-items-center"><CiCalendarDate className="ms-2 fs-4"/> {getFullDate(gameData?.date)}</div>
-            <div className="d-flex fs-5 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(getTime(gameData?.date))}</div>
             <div className="d-flex fs-5 align-items-center"><MdOutlineStadium className="ms-2 fs-4"/>  {gameData?.location}</div>
+          </div>
+          <div>
+            <div className="d-flex fs-3 align-items-center"><SlClock className="ms-2"/> {convertTo12HourFormat(getTime(gameData?.date))}</div>
           </div>
         </div>
         {!authenticated ? 

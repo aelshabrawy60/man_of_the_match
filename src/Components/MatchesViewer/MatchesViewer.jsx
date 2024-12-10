@@ -29,7 +29,7 @@ function MatchesViewer({authenticated}) {
     
     return query(
       collection(db, 'games'),
-      where('players', 'array-contains', { uid: user.uid }),
+      where('players', 'array-contains', { uid: user?.uid }),
       orderBy('date', 'desc')
     );
   }, [user, userLoading]);

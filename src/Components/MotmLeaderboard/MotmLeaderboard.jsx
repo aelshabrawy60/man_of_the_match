@@ -27,7 +27,14 @@ function MotmLeaderboard() {
         });
     }, [choosedFilter])
 
-    if (loading) return <p></p>;
+    if (loading) return (
+        <>
+        <div className='d-flex justify-content-center align-items-center w-100' style={{height: '200px'}}>
+            <div className="loader"></div>
+        </div>
+        </>
+    );
+    
     if (error) return <p></p>;
 
     return (

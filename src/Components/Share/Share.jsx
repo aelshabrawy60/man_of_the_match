@@ -3,6 +3,8 @@ import { LuShare2 } from "react-icons/lu";
 import { IoMdCopy } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { IoMdDoneAll } from "react-icons/io";
+import { LuShare } from "react-icons/lu";
+import { RxShare2 } from "react-icons/rx";
 
 import './Share.css'
 
@@ -19,7 +21,7 @@ function Share({link}) {
   return (
     <>
         <button type="button" className="share-btn gradient-btn" data-bs-toggle="modal" data-bs-target="#shareModal">
-            <LuShare2 />
+            <RxShare2 className='fs-3'/>
         </button>
 
         <div className="modal fade" id="shareModal" tabIndex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
