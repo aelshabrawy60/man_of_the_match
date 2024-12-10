@@ -15,6 +15,7 @@ import CoinsDisplay from "@/Components/Coins/CoinsDisplay";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp" // Import the useRouter hook
 import SignInAd from "@/Components/SignInAd/SignInAd";
+import Link from "next/link";
 
 
 export default function ProfilePage() {
@@ -48,7 +49,7 @@ export default function ProfilePage() {
             
             {/* Hero section with background and profile info */}
             <div className="profile-hero-section">
-                {profileId == user?.uid && <div className="coins-display-wrapper mb-4 px-3"><CoinsDisplay/></div>}
+                {profileId == user?.uid && <div className="coins-display-wrapper mb-4 px-3"><Link href={'/Transaction/Withdraw'}><CoinsDisplay/></Link></div>}
                 <div className="row m-0 align-items-center">
                     <div className="container py-2 col-12 col-lg-6">
                         <PlayerProfileInfo 
