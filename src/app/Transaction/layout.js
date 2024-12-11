@@ -2,8 +2,8 @@
 
 import CoinsDisplay from "@/Components/Coins/CoinsDisplay";
 import Link from "next/link";
-import './Transaction.css'
 import { usePathname } from 'next/navigation';
+import './transaction.css'
 
 export default function RootLayout({ children}) {
   const pathname = usePathname();
