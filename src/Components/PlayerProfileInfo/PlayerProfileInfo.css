@@ -5,7 +5,7 @@
 .profile-content-wrapper {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .profile-photo-wrapper img {
@@ -59,7 +59,7 @@
 
 @media (max-width: 768px) {
     .profile-content-wrapper {
-        gap: 1.3rem;
+        gap: 1rem;
     }
 
     .player-name {

@@ -49,9 +49,9 @@ export default function ProfilePage() {
             
             {/* Hero section with background and profile info */}
             <div className="profile-hero-section">
-                {profileId == user?.uid && <div className="coins-display-wrapper mb-4 px-3"><Link href={'/Transaction/Withdraw'}><CoinsDisplay/></Link></div>}
+                {profileId == user?.uid && <div className="coins-display-wrapper px-3"><Link href={'/Transaction/Withdraw'}><CoinsDisplay/></Link></div>}
                 <div className="row m-0 align-items-center">
-                    <div className="container py-2 col-12 col-lg-6">
+                    <div className="container mt-4 py-2 col-12 col-xl-6">
                         <PlayerProfileInfo 
                             playerId={player?.uid} 
                             name={player?.name} 
@@ -60,7 +60,7 @@ export default function ProfilePage() {
                             ratesCount={player?.ratesCount}
                         />
                     </div>
-                    <div className="stats-card px-3 col-12 col-lg-6">
+                    <div className="stats-card px-3 col-12 col-xl-6">
                         <PlayerStats games={player?.games} playerId={player.uid}/>
                     </div>
                 </div>
