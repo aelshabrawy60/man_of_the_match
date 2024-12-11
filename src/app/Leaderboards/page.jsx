@@ -6,8 +6,8 @@ import React from 'react'
 function leaderboards() {
   return (
     <div>
+        <PrizeAd/>
         <div className='p-2'>
-            <PrizeAd/>
             <MotmLeaderboard/>
         </div>
     </div>

@@ -44,7 +44,10 @@ function MotmLeaderboard() {
                 <div className='header w-100 text-center py-3'>
                     
                     <h2 className='title-text mb-5'>
-                        قائمة رجال المباريات
+                         <span>قائمة لاعبين ال</span>
+                         {choosedFilter === 'week' && <span>اسبوع</span>}
+                         {choosedFilter === 'month' && <span>شهر</span>}
+                         {choosedFilter === 'year' && <span>سنة</span>}
                     </h2>
                     <div className='filter-tabs '>
                         <button 

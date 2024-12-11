@@ -67,7 +67,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Stats and matches section */}
-            <div className="container profile-content py-4">
+            <div className="container profile-content py-4 px-0">
                 <div className="matches-card p-0">
                     <PlayerMatchesViewer gamesIds={player?.games}/>
                 </div>

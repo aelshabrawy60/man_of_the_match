@@ -211,3 +211,9 @@ button{
   color: rgb(198, 198, 198);
 }
 
+@media (min-width: 992px) {
+   .wrapper{
+    margin-right: 250px;
+   }
+}
+

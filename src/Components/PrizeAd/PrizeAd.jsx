@@ -10,7 +10,7 @@ const PrizeAd = () => {
           <span className={styles.amount}>2000</span>
           <span className={styles.currency}>جنيه</span>
         </div>
-        <div className={styles.prizeText}>جائزة رجل الشهر</div>
+        <div className={styles.prizeText}>جائزة لاعب الشهر</div>
       </div>
       <Link href="/Prize_rules" className={styles.rulesButton}>
         التفاصيل والشروط
