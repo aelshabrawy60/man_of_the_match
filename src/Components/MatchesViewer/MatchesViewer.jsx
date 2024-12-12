@@ -26,7 +26,8 @@ function MatchesViewer({authenticated}) {
   
   const myGamesQuery = useMemo(() => {
     if (!authenticated) return null;
-    
+    if(!user || userLoading) return null;
+
     return query(
       collection(db, 'games'),
       where('players', 'array-contains', { uid: user?.uid }),

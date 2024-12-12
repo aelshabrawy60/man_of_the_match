@@ -13,14 +13,14 @@
   color: #a3a3a3;
   padding: 10px 8px;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  transition: all 0.7s ease;
   white-space: nowrap;
 }
 
 .filter-btn.active {
   background: linear-gradient(302deg, rgba(0,133,48,1) 0%, rgba(0, 133, 62, 0.824) 100%);
   color: white;
-  border: none;
+  border: 1px solid transparent;
 }
 
 .filter-btn:hover {
