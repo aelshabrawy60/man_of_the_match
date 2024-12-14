@@ -1,0 +1,10 @@
+.join-match-description{
+    color: rgba(255, 255, 255, 0.634);
+}
+.time-ago{
+    font-size: 14px;
+}
+
+.notification-container{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.104);
+}

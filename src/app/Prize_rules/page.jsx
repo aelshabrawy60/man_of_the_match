@@ -10,7 +10,7 @@ function PrizeRules() {
         
         <div className={styles.prizeBox}>
           <div className={styles.prizeAmount}>
-            <span className={styles.amount}>2,000</span>
+            <span className={styles.amount}>1,000</span>
             <span className={styles.currency}>جنيه مصري</span>
           </div>
           <h2 className={styles.subtitle}>لاعب الشهر</h2>
@@ -19,7 +19,8 @@ function PrizeRules() {
         <div className={styles.rulesSection}>
           <h3>معلومات الجائزة:</h3>
           <ul>
-            <li>قيمة الجائزة 2000 جنيه مصري شهرياً</li>
+            <li>قيمة الجائزة 1000 جنيه مصري شهرياً</li>
+            <li>تبداء الجائزة من يناير 2025</li>
             <li>يتم منح الجائزة في بداية الشهر التالي</li>
             <li>في حالة التعادل، يتم تقسيم الجائزة بالتساوي بين اللاعبين المتعادلين</li>
           </ul>

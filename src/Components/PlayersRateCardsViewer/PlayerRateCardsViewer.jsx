@@ -7,6 +7,7 @@ import { GiSoccerKick } from "react-icons/gi";
 import Timer from "../Timer/Timer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
+import JoinMatch from "../JoinMatch/JoinMatch";
 
 function PlayerRateCardsViewer({ matchId }) {
   const [user, loading_, error_] = useAuthState(auth);
@@ -14,7 +15,6 @@ function PlayerRateCardsViewer({ matchId }) {
   const [gameDoc, loading, error] = useDocument(gameRef);
   const [rateEnabeld, setRateEnabeld] = useState(false);
   const [sortedPlayers, setSortedPlayers] = useState([]);
-  
 
   useEffect(() => {
     if (gameDoc) {
@@ -73,26 +73,6 @@ function PlayerRateCardsViewer({ matchId }) {
     }
   },[sortedPlayers])
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  function isTheVotesClosed(time, day){
-    const dateString = `${day}T${time}:00`
-    const date = new Date(dateString);
-    const endDate = date.setHours(date.getHours() + 4);
-    const now = new Date();
-
-    if(endDate < now){
-      return true
-    }else{
-      return false
-    }
-  }
 
   function calcRemaningTimeToCloseVotes(endDate_, date){
     const endDate = endDate_.toDate()
@@ -112,56 +92,27 @@ function PlayerRateCardsViewer({ matchId }) {
     return isUserInArray
   }
 
-  async function closeVotes() {
-    console.log("Closing votes for match:", matchId);
-
-    // Disable rating by setting a flag in the game document
-    const gameDocRef = doc(db, "games", matchId);
-    try {
-        await updateDoc(gameDocRef, {
-            closedVotes: true, // Mark the votes as closed
-            manOfTheMatch: sortedPlayers[0]?.player?.uid || null, // Set man of the match to the first player in the sorted array
-        });
-        console.log("Votes closed and man of the match set successfully for match:", matchId);
-    } catch (error) {
-        console.error("Error closing votes for match:", matchId, error);
-    }
-
-    console.log(sortedPlayers)
-    // Update player documents to add the ratings to their cumulative totals and add the game to their games array
-    for (const { player, averageRate, ratesCount } of sortedPlayers) {
-        console.log(`Processing player: ${player.uid}, Average Rate: ${averageRate}, Rates Count: ${ratesCount}`);
-
-        const playerRef = doc(db, "players", player.uid);
-        try {
-            // Increment the player's total ratings and rate count
-            await updateDoc(playerRef, {
-                ratesSum: increment(averageRate * ratesCount), // Add the total rate sum
-                ratesCount: increment(ratesCount), // Add the number of ratings
-                games: arrayUnion(matchId), // Add the matchId to the player's games array
-            });
-            console.log(`Successfully updated player: ${player.uid} - New ratesSum, ratesCount, and games array`);
-        } catch (error) {
-            console.error(`Error updating player: ${player.uid}`, error);
-        }
-    }
-
-    console.log("Close votes process completed.");
-  }
-
 
   function disableRating(){
     setRateEnabeld(false)
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="w-100">
-      <div className="header-2 mb-3 w-100 d-flex  justify-content-center">
+      <div className="header-2 mb-3 w-100 d-flex justify-content-between px-4 py-3 align-items-center">
         
-        <p className="fs-4 mt-4">
-          اللاعبين <GiSoccerKick className="fs-1" />
+        <p className="fs-4 m-0">
+          <GiSoccerKick className="fs-1 me-2" /> اللاعبين 
         </p>
-
+        <JoinMatch gameDoc={gameDoc} user={user} isUserInMatch={isUserInMatch} matchId={matchId}/>
       </div>
       {calcRemaningTimeToCloseVotes(gameDoc.data().endDate, gameDoc.data().date.toDate()) != null ?
           <div className="d-flex gray-text gap-2 justify-content-center mb-4">

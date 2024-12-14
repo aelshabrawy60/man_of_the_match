@@ -7,7 +7,7 @@ const PrizeAd = () => {
     <div className={styles.adContainer}>
       <div className={styles.prizeInfo}>
         <div className={styles.prizeAmount}>
-          <span className={styles.amount}>2000</span>
+          <span className={styles.amount}>1000</span>
           <span className={styles.currency}>جنيه</span>
         </div>
         <div className={styles.prizeText}>جائزة لاعب الشهر</div>

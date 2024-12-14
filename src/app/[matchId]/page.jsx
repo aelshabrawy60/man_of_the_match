@@ -47,6 +47,8 @@ export default function MatchPage() {
     return <div>Error: {error.message}</div>;
   }
 
+  
+
   if (gameDoc) {
     const gameData = gameDoc.data(); // Get the data from the document
     return (
