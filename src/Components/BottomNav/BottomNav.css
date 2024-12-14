@@ -45,3 +45,20 @@
 .selected-nav-icon{
   color: white;
 }
+.unread-count{
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: white
+}
+.notificaion-nav{
+  position: relative;
+}

@@ -6,16 +6,17 @@ import { useEffect, useRef, useState } from "react";
 import { IoFootball } from "react-icons/io5";
 import { GiSoccerKick } from "react-icons/gi";
 import { MdLeaderboard } from "react-icons/md";
-
+import { IoNotifications } from "react-icons/io5";
 import { RiTShirtFill } from "react-icons/ri";
 import { IoSettings } from "react-icons/io5";
 import { useUser } from "../../app/context/UserContext";
 import './BottomNav.css'
+import { Noto_Kufi_Arabic } from 'next/font/google';
 
 
 
 function BottomNav({circleSize = 50 }) {
-  const { user, loading, error } = useUser();
+  const { user, loading, error, unreadCount, unread_loading, unread_error } = useUser();
   const pathname = usePathname();
   const indicatorRef = useRef("")
 
@@ -32,8 +33,8 @@ function BottomNav({circleSize = 50 }) {
     { icon: <RiTShirtFill /> , link: `/Profile/${loading || !user ? '1' : user.uid}` },
     { icon: <GiSoccerKick /> , link: '/Matches' },
     { icon: <MdLeaderboard />  , link: '/Leaderboards' },
+    { icon : <IoNotifications /> , link: '/Notifications'},
     { icon: <IoSettings />  , link: '/Settings' },
-    
   ];
   
   function getXbyId(id){
@@ -66,7 +67,7 @@ function BottomNav({circleSize = 50 }) {
         }
         
         <div className='d-flex justify-content-around nav-items-p'>
-            {navs_.map((nav)=> <Link className={`nav-item-p d-flex justify-content-center ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} href={nav.link}><div id={nav.link} className={`nav-icon ${nav.link == pathname ? 'selected-nav-icon': ''}`}>{nav.icon}</div></Link>)}
+            {navs_.map((nav)=> <Link className={`nav-item-p d-flex justify-content-center ${pathname == nav.link ? 'selected-nav': ''}`} key={nav.link} href={nav.link}><div id={nav.link} className={`nav-icon ${nav.link == '/Notifications' ? 'notificaion-nav' : ''} ${nav.link == pathname ? 'selected-nav-icon': ''}`}>{nav.icon} {nav.link == '/Notifications' && !unread_loading && unreadCount > 0 ? <div className='unread-count'> {unreadCount} </div> : null}</div></Link>)}
         </div>
     </div>
   );

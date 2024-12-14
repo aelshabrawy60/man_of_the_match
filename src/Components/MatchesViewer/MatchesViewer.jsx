@@ -98,7 +98,7 @@ function MatchesViewer({authenticated}) {
           </button>
         </div>
 
-      <div className='row m-0 w-100 gap-3'>
+      <div className='row m-0 text-center w-100 gap-3'>
         {isLoading ? (
           // Show 3 skeleton cards while loading
           Array(3).fill(0).map((_, index) => (

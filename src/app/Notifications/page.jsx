@@ -5,6 +5,7 @@ import { auth, db } from "../../app/firebase/clientApp"; // Ensure firestore is 
 import { collection, query, where, orderBy } from "firebase/firestore";
 import Notification from "@/Components/Notification/Notification";
 import { doc, updateDoc } from 'firebase/firestore'
+import SignInAd from "@/Components/SignInAd/SignInAd";
 
 function Page() {
   const [user, loading, error] = useAuthState(auth);
@@ -33,12 +34,19 @@ function Page() {
       console.error("Error updating notification: ", error);
     }
   }
-  if (loading || notificationsLoading) return <div>Loading...</div>;
+  if (loading || notificationsLoading) return <div></div>;
   if (error || notificationsError) return <div>Error: {(error || notificationsError).message}</div>;
 
+  if(!user && !loading){
+    return (
+        <div className="d-flex justify-content-center align-items-center p-3" style={{height: '100vh'}}>
+            <SignInAd/>
+        </div>
+    );
+  }
   return (
     <div className="p-4">
-      <h1>الاشعارات</h1>
+      <h1 className="mb-4">الاشعارات</h1>
       <ul className="p-0" style={{ listStyle: "none" }}>
         {notifications?.map((notification, i) => (
           <li key={i}><Notification data={notification} refuseRequest={refuseRequest}/></li> // Adjust to your notification structure
