@@ -94,9 +94,6 @@ function PrizeRules() {
           شاهد ترتيب اللاعبين
         </Link>
 
-        
-
-
       </div>
     </div>
   )
