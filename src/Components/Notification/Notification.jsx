@@ -103,6 +103,24 @@ function Notification({ data, refuseRequest }) {
                 </div>
             </div>
         );
+    }else if(data.type == "join-match-accept"){
+        const match = matchData?.data();
+        const matchTime = match?.date
+            ?.toDate()
+            .toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })
+            .replace("AM", "ص")
+            .replace("PM", "م");
+            
+        return(
+            <div className="d-flex gap-3 p-2 py-4 notification-container">
+                <div>
+                    <div className='mb-1 join-match-description'>
+                        تمت اضافاتك الي مباراة {match?.location} الساعة {matchTime}
+                    </div>
+                    <div className='mb-2 time-ago'>{timeAgo}</div>
+                </div>
+            </div>
+        )
     }
 
     return <div />;

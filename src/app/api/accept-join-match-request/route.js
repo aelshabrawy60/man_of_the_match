@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server';
 import admin from '@/lib/firebase-admin';
+import { getCurrentUser } from '@/lib/auth';
 
 const db = admin.firestore();
 
 export async function POST(req) {
     const { playerId, matchId } = await req.json(); // Fixed typo: `receiver` instead of `reciver`
 
+    const user = await getCurrentUser(req);
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     // Validate required fields
     if (!playerId || !matchId) {
         console.log(sender, matchId)
@@ -15,6 +20,9 @@ export async function POST(req) {
 
     try {
         await addPlayer(playerId, matchId);
+
+        // send notification to the added player
+        await createNotification(user.uid, playerId, 'join-match-accept', 'تمت اضافاتك للمباريه', matchId);
 
         return NextResponse.json({ message: 'Player added successfully' }, { status: 200 });
     } catch (error) {
@@ -47,3 +55,24 @@ async function addPlayer(playerId, matchId) {
     }
 }
 
+
+async function createNotification(sender, receiver, type, message, matchId) {
+    try {
+        const NOTIFICATIONS_COLLECTION = 'notifications';
+        const notificationRef = db.collection(NOTIFICATIONS_COLLECTION).doc(`${sender}_${matchId}`);
+
+        await notificationRef.set({
+            sender,
+            receiver, // No need to repeat `receiver: receiver`
+            type,
+            message,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            read: false,
+            matchId: matchId || null,
+            status: 'pending',
+        });
+    } catch (error) {
+        console.error('Error creating notification:', error);
+        throw error; // Rethrow to handle in the caller
+    }
+}

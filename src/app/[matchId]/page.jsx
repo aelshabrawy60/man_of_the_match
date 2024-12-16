@@ -76,7 +76,7 @@ export default function MatchPage() {
           :
           null
         }
-        <PlayerRateCardsViewer matchId={matchId}/>
+        <PlayerRateCardsViewer matchId={matchId} authenticated={authenticated}/>
           {
             authenticated && gameData.creator == user.uid ?
             <>

@@ -9,6 +9,7 @@ function PrizeRules() {
         <h1 className={styles.title}>قواعد الجائزة</h1>
         
         <div className={styles.prizeBox}>
+          <img src='cover9.jpeg' className="field"></img>
           <div className={styles.prizeAmount}>
             <span className={styles.amount}>1,000</span>
             <span className={styles.currency}>جنيه مصري</span>

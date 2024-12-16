@@ -9,7 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../app/firebase/clientApp";
 import JoinMatch from "../JoinMatch/JoinMatch";
 
-function PlayerRateCardsViewer({ matchId }) {
+function PlayerRateCardsViewer({ matchId , authenticated}) {
   const [user, loading_, error_] = useAuthState(auth);
   const gameRef = doc(db, "games", matchId);
   const [gameDoc, loading, error] = useDocument(gameRef);
@@ -87,7 +87,7 @@ function PlayerRateCardsViewer({ matchId }) {
 
   function isUserInMatch(){
     const players = gameDoc.data().players
-    const isUserInArray = players.some(player => player.uid === user.uid);
+    const isUserInArray = players.some(player => player.uid === user?.uid);
     console.log(isUserInArray)
     return isUserInArray
   }
@@ -112,7 +112,11 @@ function PlayerRateCardsViewer({ matchId }) {
         <p className="fs-4 m-0">
           <GiSoccerKick className="fs-1 me-2" /> اللاعبين 
         </p>
-        <JoinMatch gameDoc={gameDoc} user={user} isUserInMatch={isUserInMatch} matchId={matchId}/>
+        {authenticated ? 
+          <JoinMatch gameDoc={gameDoc} user={user} isUserInMatch={isUserInMatch} matchId={matchId}/>
+          :
+          null
+        }
       </div>
       {calcRemaningTimeToCloseVotes(gameDoc.data().endDate, gameDoc.data().date.toDate()) != null ?
           <div className="d-flex gray-text gap-2 justify-content-center mb-4">
