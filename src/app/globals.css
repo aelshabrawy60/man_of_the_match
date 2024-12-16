@@ -222,3 +222,7 @@ button{
   background-color: rgb(141, 43, 43);
   background: linear-gradient(302deg, rgb(136, 29, 11) 0%, rgba(136, 30, 11, 0.749) 100%);
 }
+
+body::-webkit-scrollbar{
+  display: none;
+}
