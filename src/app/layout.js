@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
-      <script>(function(d,z,s)s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){})('groleegni.net',8667514,document.createElement('script'))</script>
+      <script>{(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('cimtaiphos.com',8667562,document.createElement('script'))}</script>
 
       {/*push ad */}
       <script src="https://couphaithuph.net/act/files/tag.min.js?z=8667421" data-cfasync="false" async></script>
