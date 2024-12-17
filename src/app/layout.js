@@ -7,6 +7,7 @@ import { Changa } from "next/font/google";
 import Navbar from "@/Components/Navbar/Navbar";
 import BottomNav from "@/Components/BottomNav/BottomNav";
 import Sidebar from "@/Components/Sidebar/Sidebar";
+import Script from "next/script";
 
 const changa = Changa({
   subsets: ["latin", "latin-ext"], // Specify required subsets
@@ -23,8 +24,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
-      <script>{(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('cimtaiphos.com',8667562,document.createElement('script'))}</script>
+      
 
+      
       {/*push ad */}
       <script src="https://couphaithuph.net/act/files/tag.min.js?z=8667421" data-cfasync="false" async></script>
 
@@ -33,6 +35,32 @@ export default function RootLayout({ children }) {
         crossorigin="anonymous"></script>
 
       <body className={changa.className}>
+        {/*Vignette Banner*/}
+        <Script
+            id="monetag-script"
+            strategy="afterInteractive" // Ensures it runs after the page loads
+            dangerouslySetInnerHTML={{
+              __html: `(function(d,z,s){
+                s.src='https://'+d+'/401/'+z;
+                try{(document.body||document.documentElement).appendChild(s)}
+                catch(e){}
+              })('cimtaiphos.com',8667562,document.createElement('script'));`,
+        }}
+        />
+
+        {/*Vignette*/}
+        <Script
+            id="monetag-script"
+            strategy="afterInteractive" // Ensures it runs after the page loads
+            dangerouslySetInnerHTML={{
+              __html: `(function(d,z,s){
+                s.src='https://'+d+'/401/'+z;
+                try{(document.body||document.documentElement).appendChild(s)}
+                catch(e){}
+              })('cimtaiphos.com',8667550,document.createElement('script'));`,
+        }}
+          />
+
         {/* Google Analytics gtag.js */}
         <script
           async
