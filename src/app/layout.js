@@ -23,13 +23,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
+      <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',8667514,document.createElement('script'))</script>
+
       {/*push ad */}
       <script src="https://couphaithuph.net/act/files/tag.min.js?z=8667421" data-cfasync="false" async></script>
 
       <meta name="monetag" content="a1d280981f137320be5812eb410c303c"></meta>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6977923343312127"
         crossorigin="anonymous"></script>
-        
+
       <body className={changa.className}>
         {/* Google Analytics gtag.js */}
         <script
