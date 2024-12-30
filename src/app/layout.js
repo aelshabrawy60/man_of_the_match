@@ -26,6 +26,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
 
       
+      
+      
+
+      <body className={changa.className}>
 
 
         {/* Google Analytics gtag.js */}
